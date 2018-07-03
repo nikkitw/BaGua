@@ -29,16 +29,16 @@
 		<script type="text/javascript">
 		$(function(){		
 		try{
-	    if (/Android|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-					$("#Container").attr("url", "./images/background_mobile.png");
+	    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+					$("#Container").attr("url", "./img/background_mobile.png");
 	        $("#mycss").attr("href","./css/style_mobile.css");
 	    }else{	    		
-					$("#Container").attr("url", "./images/background_pc.png");
+					$("#Container").attr("url", "./img/background_pc.png");
 	        $("#mycss").attr("href","./css/style_pc.css");
 	    }
 		}catch(e){}    
 
-});
+		});
 		function frametarget(){
 			var location_href=window.location.href;
 			var jump_query=['index.html?','/?'];
@@ -73,10 +73,10 @@
 	</head>
 
 	<body>
-		<header class="sixteen columns alpha omega">
-				<a href="index.html"><img class="brand" src="img/logo2.png" alt="Tri"></a>
-	</header>
-
+		<!-- <header class="sixteen columns alpha omega"> -->
+				<!-- <a href="index.html"><img class="brand" src="img/logo2.png" alt="Tri"></a> -->
+	<!-- </header> -->
+<div id="Container" >
 	<div id = "Content-Main">
 			<iframe id="nav" src="nav.html" frameborder="0" width="100%" ></iframe>
 			<iframe name="framemain" src="welcome.html" frameborder="0" width="100%" id="framemain" onload="this.height=500" style="overflow-y:hidden;overflow-x:hidden;"></iframe>
@@ -98,9 +98,10 @@
 				}
 				window.setInterval("reinitIframe()", 200);
 			</script> 
-		</div>
+		</div></div>
 		
 		<!--Grab JS Files-->
+<!--
 		<script type="text/javascript" src="js/jquery.js" ></script>
 		<script type="text/javascript" src="js/jquery.flexslider.js" ></script>
 		<script type="text/javascript">
@@ -111,6 +112,8 @@
 			  });
 			});
 		</script>
+-->
 		<footer>© 2016-2018 奇迹暖暖攻略八卦樓 - All Rights Reserved</footer>
+		
 	</body>
 </html>
