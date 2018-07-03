@@ -1,9 +1,16 @@
+#Container {
+	background-color: #ffffff;
+	overflow: hidden;
+	background-image: url(../img/background_pc.png);
+	background-repeat: no-repeat;
+	background-position: top;
+}
 #Content-Main {
 	border-radius: 25px;
 	background-color: rgba(255, 255, 255, 0.6); 
 	padding: 2%;
 	//box-shadow: 5px 5px 5px #888888;
-	margin-top: 5%;
+	margin-top: 25%;
 	margin-bottom: 2%;
 	margin-right: 10%;
 	margin-left: 10%;
