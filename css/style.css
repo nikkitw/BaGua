@@ -334,7 +334,7 @@ footer a:visited {
   padding:3px 8px;
   margin:8px;
   text-decoration:none;
-  background-color:rgba(227, 227, 227, 0.9) /*可改顏色*/
+  background-color:#ffffff; /*可改顏色*/
   position:relative; 
 }
 
@@ -344,7 +344,7 @@ footer a:visited {
 }
 
 .FloatMenu span:hover{
-    background:rgba(219, 219, 255, 0.5);/*可改顏色*/
+    background:rgb(219, 219, 255);/*可改顏色*/
     border:1px solid #919394;
     color:#000
 }
