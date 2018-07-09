@@ -310,3 +310,41 @@ footer a:link {
 footer a:visited {
 	color: #e3e3e3;
 }
+
+.FloatMenu {
+    position:fixed;
+    right:1%;
+    top:50%;
+    min-height:20px;
+    border:0; 
+    padding:0;
+    margin:0;
+    background-color: rgba(0, 0, 0, 0);  
+    z-index:5;
+}
+
+.FloatMenu li {
+  list-style-type:none;
+}
+
+.FloatMenu span {
+  border:1px solid #999;
+  border-radius:5px;
+  display:inline-block;
+  padding:3px 8px;
+  margin:8px;
+  text-decoration:none;
+  background-color:rgba(227, 227, 227, 0.9) /*可改顏色*/
+  position:relative; 
+}
+
+.FloatMenu span a {
+	text-decoration:none;
+	color:#333333;
+}
+
+.FloatMenu span:hover{
+    background:rgba(219, 219, 255, 0.5);/*可改顏色*/
+    border:1px solid #919394;
+    color:#000
+}
