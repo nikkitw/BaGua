@@ -100,7 +100,7 @@ p.normal br {
 
 p {
 	font-size: 100%;
-	font-weight : 800;
+/*	font-weight : 500;*/
 	font-family: "Microsoft JhengHei", Sans-Serif;
 	color: #111111;
 	line-height: 1.8em;
@@ -344,7 +344,7 @@ footer a:visited {
 }
 
 .FloatMenu span:hover{
-    background:rgb(219, 219, 255);/*可改顏色*/
+    background:#E1E1E1;/*可改顏色*/
     border:1px solid #919394;
     color:#000
 }
