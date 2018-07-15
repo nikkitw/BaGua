@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>冰雪舞會計算器</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+.remark{font-size:70%;}
+tr.blue{color:#0050FF;}
+td {text-align:left;}
+</style>
+<script type="text/javascript">
+//活動結束時間
+var time_end=new Date("1/15/2018 23:59:59 GMT+0800").getTime();
+//兌換價格
+var need={
+	'春之華':47,
+	'春之少女':65,
+	'雲春暖':60,
+	'雲春暖':60,
+	'踏春':44,
+	'春之呢喃':36,
+	'春回':40,
+	'二月歌':41,
+	'春之精靈':46,
+};
+//消費檔次(鑽)
+var topup=[0,100,180,310,430,590];
+//消費送雪花
+var topup_gain=[0,10,20,0,0,50];
+//關卡數量
+var level_cnt=5;
+//買一次花費鑽石
+var price=30;
+//買一次獲得次數
+var once=5;
+//每天免費次數(每關)
+var free_1day=5;
+//每關體力
+var per_stamina=4;
+//默認每關道具
+var default_gain=[15,15,15,15,15];
+//物品名
+var item_name='雪花';
+
+//***數據設置完畢？***
+
+//部件總共數量
+var totalCnt=[0,30,30,26,30,30,26,9,9,5,4];
+//進化消耗數量(華麗)
+var evo1=[0,5,5,5,5,5,5,0,0,0,0];
+var maxevo1=4;
+//進化消耗數量(珍稀)
+var evo2=[0,15,15,15,15,15,15,0,0,0,0];
+var maxevo2=1;
+//成品消耗需數
+var evo3=[0,9,9,5,9,9,5,8,8,5,4];
+var maxevo3=1;
+//***寫死數據end***
+
+var own=[]; var own1=[]; var own2=[]; var own3=[];
+
+window.onload = function(){
+	setInterval(settime, 1000);
+	init();
+	inputTable();
+	default_setting();
+	calc();
+};
+
+function init(){
+	var cell1=''; var cell2='';
+	for (i=0;i<level_cnt;i++){
+		if (i>0) {cell1+='/'; cell2+='/';}
+		cell1+=inputBox('each_gain'+i,'calc()',2);
+		cell2+=inputBox('remain_today'+i,'calc()',2);
+	}
+
+	var out='<table>'+tr(td('基本設置','colspan="2"'));
+	out+=tr(td('當前'+item_name+'：')+td(inputBox('current','calc()')));
+	out+=tr(td('每關'+item_name+'：')+td(cell1));
+	out+=tr(td('剩餘天數：')+td(inputBox('remain_days','calc()')));
+	out+=tr(td('今日剩餘次數：')+td(cell2));
+	out+=tr(td('已領儲值獎勵檔次：')+td(selectBox('already_topup','calc()',topup)));
+	out+=tr(td('預計儲值獎勵檔次：')+td(selectBox('plan_topup','calc()',topup)));
+	out+='</table>';
+	
+	document.getElementById("table").innerHTML = out;
+}
+
+function inputTable(){
+	var out='<table border="1">';
+	out+=tr(td('名稱')+td('擁有數量')+td('還缺數量')+td('需'+item_name));
+	//out+=tr(td('*不需要的部件可以填1','class="remark" colspan="4"'));
+	out+=tr(td('春之華','id="part1"')+td(inputBox('base1','calc()',3))+td('','id="to1"')+td('','id="rose1"'));
+	out+=tr(td('　春之華·華麗')+td(inputBox('base1_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　　春之華·珍稀')+td(inputBox('base1_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　　純白之風')+td(inputBox('base1_3','calc()',3))+td('')+td(''),'class="blue"');
+	
+	out+=tr(td('春之少女','id="part2"')+td(inputBox('base2','calc()',3))+td('','id="to2"')+td('','id="rose2"'));
+	out+=tr(td('　春之少女·華麗')+td(inputBox('base2_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　　春之少女·珍稀')+td(inputBox('base2_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　　雪之女王')+td(inputBox('base2_3','calc()',3))+td('')+td(''),'class="blue"');
+	
+	out+=tr(td('雲春暖','id="part3"')+td(inputBox('base3','calc()',3))+td('','id="to3"')+td('','id="rose3"'));
+	out+=tr(td('　雲春暖·華麗')+td(inputBox('base3_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　　雲春暖·珍稀')+td(inputBox('base3_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　　寒冬之覆')+td(inputBox('base3_3','calc()',3))+td('')+td(''),'class="blue"');
+	out+=tr(td('雲春暖','id="part10"')+td(inputBox('base10','calc()',3))+td('','id="to10"')+td('','id="rose10"'));
+	out+=tr(td('　　　冬耀')+td(inputBox('base10_3','calc()',3))+td('')+td(''),'class="blue"');
+	
+	out+=tr(td('踏春','id="part4"')+td(inputBox('base4','calc()',3))+td('','id="to4"')+td('','id="rose4"'));
+	out+=tr(td('　踏春·華麗')+td(inputBox('base4_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　　踏春·珍稀')+td(inputBox('base4_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　　極冰之主')+td(inputBox('base4_3','calc()',3))+td('')+td(''),'class="blue"');
+	
+	out+=tr(td('春之呢喃','id="part5"')+td(inputBox('base5','calc()',3))+td('','id="to5"')+td('','id="rose5"'));
+	out+=tr(td('　春之呢喃·華麗')+td(inputBox('base5_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　春之呢喃·珍稀')+td(inputBox('base5_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　　冰晶王冠')+td(inputBox('base5_3','calc()',3))+td('')+td(''),'class="blue"');
+	
+	out+=tr(td('春回','id="part6"')+td(inputBox('base6','calc()',3))+td('','id="to6"')+td('','id="rose6"'));
+	out+=tr(td('　春回·華麗')+td(inputBox('base6_1','calc()',3))+td('')+td(''));
+	out+=tr(td('　春回·珍稀')+td(inputBox('base6_2','calc()',3))+td('')+td(''));
+	out+=tr(td('　　雪眸清顏')+td(inputBox('base6_3','calc()',3))+td('')+td(''),'class="blue"');
+	out+=tr(td('春之精靈','id="part8"')+td(inputBox('base8','calc()',3))+td('','id="to8"')+td('','id="rose8"'));
+	out+=tr(td('　　雪眸清顏')+td(inputBox('base8_3','calc()',3))+td('')+td(''),'style="display:none"');
+	
+	out+=tr(td('二月歌','id="part7"')+td(inputBox('base7','calc()',3))+td('','id="to7"')+td('','id="rose7"'));
+	out+=tr(td('春回','id="part9"')+td(inputBox('base9','calc()',3))+td('','id="to9"')+td('','id="rose9"'));
+	out+=tr(td('　　　輝耀')+td(inputBox('base7_3','calc()',3))+td('')+td(''),'class="blue"');
+	out+=tr(td('　　　輝耀')+td(inputBox('base9_3','calc()',3))+td('')+td(''),'style="display:none"');
+	out+='</table>'
+	document.getElementById("input").innerHTML = out;
+}
+
+function default_setting(){
+	var date_now=new Date();
+	var time_now=date_now.getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	if(date_now.getHours()<5&&time_end-time_now>0){time_d+=1;}
+	setVal("remain_days", time_d);
+	for (i=0;i<level_cnt;i++){
+		if(date_now.getDate()==17) setVal("remain_today"+i, free_1day);
+		else setVal("remain_today"+i, 0);
+		setVal("each_gain"+i, default_gain[i]);
+	}
+	setVal('current', 0);
+	
+	var es = document.getElementsByTagName('input');
+    for (var z=0;z<es.length;z++) { if(es[z].id&&es[z].id.substr(0,4)=='base'){
+		var id=es[z].id;
+		setVal(id, 0);
+    }}
+}
+
+function calc(){
+	//special handling
+	setVal('base8_3',getVal('base6_3'));
+	setVal('base9_3',getVal('base7_3'));
+	setVal('base9',getVal('base6'));
+	
+	var aim=0;
+	/*
+	for (var i=0;i<totalCnt.length;i++){
+		if(document.getElementById('base'+i+'_3')&&getVal('base'+i+'_3')>0){
+			if(document.getElementById('base'+i+'_2')&&getVal('base'+i+'_2')<1) setVal('base'+i+'_2',1);
+			if(document.getElementById('base'+i+'_1')&&getVal('base'+i+'_1')<1) setVal('base'+i+'_1',1);
+			if(document.getElementById('base'+i)&&getVal('base'+i)<1) setVal('base'+i,1);
+		}
+		if(document.getElementById('base'+i+'_2')&&getVal('base'+i+'_2')>0){
+			if(document.getElementById('base'+i+'_1')&&getVal('base'+i+'_1')<1) setVal('base'+i+'_1',1);
+			if(document.getElementById('base'+i)&&getVal('base'+i)<1) setVal('base'+i,1);
+		}
+		if(document.getElementById('base'+i+'_1')&&getVal('base'+i+'_1')>0){
+			if(document.getElementById('base'+i)&&getVal('base'+i)<1) setVal('base'+i,1);
+		}
+	}
+	*/
+	for (var i=0;i<totalCnt.length;i++){
+		own[i]=getVal('base'+i);
+		own1[i]=getVal('base'+i+'_1');
+		own2[i]=getVal('base'+i+'_2');
+		own3[i]=getVal('base'+i+'_3');
+		
+		if (document.getElementById("to"+i)){
+			var max3=own3[i]>=maxevo3 ? maxevo3 : own3[i];
+			var max2=own3[i]>=maxevo3 ? 1 : (own2[i]>=maxevo2 ? maxevo2 : own2[i]);
+			var max1=own3[i]>=maxevo3 ? 1 : (own2[i]>=maxevo2 ? 1 : (own1[i]>=maxevo1 ? maxevo1 : own1[i]));
+			var max3=own3[i]>=maxevo3 ? maxevo3 : own3[i];
+			var max2=own2[i]>=maxevo2 ? maxevo2 : own2[i];
+			var max1=own1[i]>=maxevo1 ? maxevo1 : own1[i];
+		
+			var to_i=Math.max(0, totalCnt[i]-evo3[i]*max3-evo2[i]*max2-evo1[i]*max1-own[i]);
+			var rose_i=to_i*need[getHtml('part'+i)];
+			
+			aim+=rose_i;
+			
+			document.getElementById("to"+i).innerHTML = to_i;
+			document.getElementById("rose"+i).innerHTML = rose_i;
+		}
+	}
+
+	var remain_days=Math.max(0,getVal('remain_days'));
+	var max_item=[0,1]; var remain_today=[]; var each_gain=[]; var rem_cnt_today=0; var freegain_1day=0;
+	for (i=0;i<level_cnt;i++){
+		remain_today[i]=Math.max(0,getVal('remain_today'+i));
+		each_gain[i]=Math.max(0,getVal('each_gain'+i));
+		if(each_gain[i]>max_item[0]) {max_item[0]=each_gain[i]; max_item[1]=i+1;}
+		rem_cnt_today+=remain_today[i]*each_gain[i];
+		freegain_1day+=each_gain[i]*free_1day;
+	}
+	var current=Math.max(0,getVal('current'));
+	if(getVal('already_topup')>getVal('plan_topup')) setVal('plan_topup',getVal('already_topup')); //adjust for plan vs already_topup
+	var already_topup=Math.max(0,getVal('already_topup'));
+	var plan_topup=Math.max(0,getVal('plan_topup'));
+	for (i=0;i<topup.length;i++){
+		if(topup[i]>already_topup&&topup[i]<=plan_topup){
+			current+=topup_gain[i];
+		}
+	}
+	var rem=aim-current;
+	var rem_free=rem_cnt_today+freegain_1day*remain_days;
+	var extra=rem-rem_free;
+	var times=Math.max(0,Math.ceil(extra/max_item[0]));
+	var to_buy=Math.max(0,Math.ceil(times/once));
+	var to_pay=to_buy*price;
+	var to_stamina=times*per_stamina;
+	
+	var calcres='<table>'+tr(td('計算結果'));
+	calcres+=tr(td('共需'+aim+'個'+item_name));
+	calcres+=tr(td('扣除已有還需刷'+rem+'個（免費'+rem_free+'個，額外'+extra+'個）'));
+	calcres+=tr(td('需額外刷第'+max_item[1]+'關'+times+'次，購買'+to_buy+'次，花鑽'+to_pay+'個，共'+to_stamina+'體'));
+	calcres+='</table>';
+	document.getElementById("calcres").innerHTML = calcres;
+}
+
+function loadSettings(){
+	if (typeof(Storage) !== "undefined" && localStorage.getItem("nikki_blackrose")) {
+		var loadString=localStorage.getItem("nikki_blackrose");
+		
+		var base0=getStoredStr(loadString, 'base0').split(',');
+		var base1=getStoredStr(loadString, 'base1').split(',');
+		var base2=getStoredStr(loadString, 'base2').split(',');
+		var base3=getStoredStr(loadString, 'base3').split(',');
+		var each_gain=getStoredStr(loadString, 'each_gain').split(',');
+		
+		for (i=0;i<totalCnt.length;i++){
+			setVal('base'+i,base0[i]);
+			setVal('base'+i+'_1',base1[i]);
+			setVal('base'+i+'_2',base2[i]);
+			setVal('base'+i+'_3',base3[i]);
+		}
+		for (i=0;i<level_cnt;i++){setVal("each_gain"+i,each_gain[i]);}
+		
+		calc();
+	}
+}
+function getStoredStr(string, id){
+	var start=string.indexOf(id+':[')+(id+':[').length;
+	return string.substr(start,string.substr(start).indexOf('];'));
+}
+function saveSettings(){
+	var base0=[]; var base1=[]; var base2=[]; var base3=[]; var each_gain=[];
+	for (i=0;i<totalCnt.length;i++){
+		base0.push(getVal('base'+i));
+		base1.push(getVal('base'+i+'_1'));
+		base2.push(getVal('base'+i+'_2'));
+		base3.push(getVal('base'+i+'_3'));
+	}
+	for (i=0;i<level_cnt;i++){each_gain.push(getVal("each_gain"+i));}
+	var saveString='base0:['+base0.join(',')+'];base1:['+base1.join(',')+'];base2:['+base2.join(',')+'];base3:['+base3.join(',')+'];';
+	saveString+='each_gain:['+each_gain.join(',')+'];';
+	//base:[1,1,0,0,0];each_gain:[3,3,5,5,5];
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("nikki_blackrose", saveString);
+	}
+	document.getElementById('storage').innerHTML=saveString;
+}
+
+function noNaN( n ) { return isNaN( n ) ? 0 : n; }
+function td(text,attr){ return '<td'+(attr?' '+attr:'')+'>'+text+'</td>'; }
+function tr(text,attr){ return '<tr'+(attr?' '+attr:'')+'>'+text+'</tr>'; }
+function remark(text){ return '<span class="remark">'+text+'</span>'; }
+function inputBox(id,onchange,size){ return '<input type="text" id="'+id+'" onkeyup='+onchange+(size?' size="'+size+'"':'')+'>'; }
+function selectBox(id,onchange,valArr,textArr){
+	var ret='<select id="'+id+'" onchange='+onchange+'>';
+	if(!textArr){textArr=valArr;}
+	for (var i in valArr){
+		ret+='<option value="'+valArr[i]+'">'+textArr[i]+'</option>';
+	}
+	ret+='</select>';;
+	return ret;
+}
+function getVal(id){ return (document.getElementById(id) ? noNaN(parseInt(document.getElementById(id).value)) : 0); }
+function getHtml(id){ return document.getElementById(id).innerHTML;}
+function setVal(id,val){ if(document.getElementById(id)) document.getElementById(id).value=val; }
+function settime(){
+	var time_now=new Date().getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	var time_h = Math.max(0,Math.floor((time_end-time_now)/1000/60/60)%24);
+	var time_m = Math.max(0,Math.floor((time_end-time_now)/1000/60)%60);
+	var time_s = Math.max(0,Math.floor((time_end-time_now)/1000)%60);
+	document.getElementById("showTime").innerHTML = time_d + "天" + time_h + "時" + time_m + "分" + time_s + "秒";
+};
+</script>
+</head>
+
+<body>
+<div class="sixteen columns">
+<div class="h-border">
+<div class="heading">
+<h1>冰雪舞會計算器</h1>
+</div>
+</div>
+</div>
+<p><strong>更新時間：</strong>2018.01.09<br>
+<strong>作者：</strong>Rean翎<br>
+<strong>繁體化：</strong>浠玥<br>
+<strong>使用說明：</strong>根據自己的分數情況調整每關雪花，默認為15個，雪花獲取情況請參考<a href="20180109snow.html" target="framemain">活動說明</a></p>
+<hr/>
+<p align="center">距離活動結束還有　<span id="showTime"></span><br>
+<button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
+</p>
+<p id="table" align="center"></p>
+<p id="input" align="center"></p>
+<p id="calcres" align="center"></p>
+<p id="storage" style="display:none"></p>
+</body>
+</html>
