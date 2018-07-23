@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>滿天繁星 第三期計算器</title>
+<title>滿天繁星 第二期計算器</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" type="text/css" href="../../css/style.css" />
 <style>
@@ -12,37 +12,31 @@ td {text-align:left;}
 </style>
 <script type="text/javascript">
 //開始時間
-var time_start=new Date("6/12/2018 5:00:00 GMT+0800").getTime();
+var time_start=new Date("9/6/2017 5:00:00 GMT+0800").getTime();
 //結束時間
-var time_end=new Date("6/18/2018 23:59:59 GMT+0800").getTime();
+var time_end=new Date("9/12/2017 23:59:59 GMT+0800").getTime();
 //部件類別
 var type=[
-'髮型','連身裙','外套','襪子','鞋子','特殊·前景','手飾·雙','手持·左','特殊·後景','妝容',
-'髮型','外套','上衣','下著','特殊·前景','頭飾·髮飾','頭飾·髮夾','手飾·雙','頸飾·圍巾','手持·左','腰飾','特殊·地板','妝容',
 '髮型','連身裙','外套','鞋子','頭飾','手飾·雙','頸飾·項鍊','特殊·前景','妝容',
 '髮型','連身裙','鞋子','特殊·前景','耳飾','手飾·左','頸飾·項鍊','頸飾·圍巾','特殊·背景','妝容',
 '髮型','連身裙','鞋子','頭飾','手持·右','特殊·前景','特殊·背景',
 '髮型','連身裙','鞋子','妝容','頭飾','特殊·尾部','特殊·前景','特殊·耳朵'];
 //部件名稱
 var cname=[
-'房日兔','靈寒歌','靈瓏雪披','天駟襪','玄靈靴','流雲祥瑞','玄靈手袖','鉤鈐靈杖','臥兔靈瓏','寒潭靈瞳',
-'張月鹿','紫玉蕙帶','紫衣仙客','神秀白鹿','天香風月','紫葉鹿角','銀杏簪','月桂袖','天廟鈴','雲雩扇','封鏡裳','澄淵水蓮','扶搖之月',
 '尾火虎','凜夜九卿','幽嵐夜鳶','夜摩羅','夜合冠','凜夜護手','天江珠','幽夜白虎','幽冥紫鳶',
 '女土蝠','水月鏡花','雪錦靴','雷霆蝠影','靈蝠玦','月離珠','吉祥玉','月色錦披','中天玄月','星落玄影',
 '亢金龍','九天帝女','繞祥雲','游龍釵','玉龍琴','瑤台玉霧','瑤台壽客',
 '心月狐','一品朱衣','心月緣','朱顏國色','花迭羅','心月狐尾','曜月心燈','心月狐耳'];
 //套裝名稱
-var set=['房日兔','張月鹿','尾火虎','女土蝠','亢金龍','心月狐'];
+var set=['尾火虎','女土蝠','亢金龍','心月狐'];
 //單價
 var need=[
-36,48,39,26,31,40,28,35,45,43,
-35,31,42,45,39,34,25,30,29,33,27,37,36,
 32,52,56,34,31,29,27,61,49,
 39,56,31,57,28,28,29,59,70,46,
 40,92,54,29,36,55,65,
 39,96,42,72,33,70,62,29];
 //每套部件數量
-var setCnt=[10,13,9,10,7,8];
+var setCnt=[9,10,7,8];
 //是否有消費or儲值送
 var haveConsume=0;
 //消費or儲值檔位
@@ -270,17 +264,19 @@ return ret;
 </head>
 
 <body>
-	<div class="sixteen columns">
-		<div class="h-border">
-			<div class="heading">
-				<h1>滿天繁星 第三期計算器</h1>
-			</div>
-		</div>
-	</div>
-	<p><strong>更新時間：</strong>2018.06.12<br/><strong>作者：</strong>Rean翎<br/><strong>繁體化：</strong>莫默墨陌<br/>
-<strong>使用說明：</strong>根據自己的勝率調整，星辰石獲取情況請參考<a href="20180612star.html" target="framemain">活動說明</a><br/></p>
+<div class="sixteen columns">
+<div class="h-border">
+<div class="heading">
+<h1>滿天繁星 第二期計算器</h1>
+</div>
+</div>
+</div>
+<p><strong>更新時間：</strong>2018.09.05<br>
+  <strong>作者：</strong>Rean翎<br>
+  <strong>繁體化：</strong>莫默墨陌<br>
+  <strong>使用說明：</strong>根據自己的勝率調整，【星辰石】獲取情況請參考<a href="20170906star.html" target="framemain">活動說明</a><br>
+</p>
 <hr/>
-<div style="height: 20px; overflow: hidden; width: 100%;"></div>
 <p align="center">距離活動結束還有　<span id="showTime"></span><br>
 <button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
 </p>
