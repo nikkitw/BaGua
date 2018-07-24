@@ -1,0 +1,262 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>愛麗絲二選一計算器</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+.remark{font-size:80%;}
+td {text-align:left;}
+</style>
+<script type="text/javascript" charset="UTF-8">
+//結束時間
+var time_end=new Date("7/16/2017 23:59:59 GMT+0800").getTime();
+//部件類別
+var type=['髮型','連身裙','襪子','鞋子','妝容','頭飾·髮飾','手持·右'];
+//部件名稱
+var cname=['愛麗絲之證','戰鬥愛麗絲','睡夢森林','幻影計時','時間航海','勇敢的心','貴族之叉'];
+//套裝名稱
+var set=['戰鬥愛麗絲'];
+//單價
+var need=[70,98,60,60,67,60,68];
+//每套部件數量
+var setCnt=[7];
+//消費檔位
+//var consume=[0,99,299,499,699,999];
+//消費贈送
+//var consume_gain=[0,5,35,65,95,160];
+//道具名稱
+var item_name='懷錶';
+//關卡數量
+var level_cnt=1;
+//買一次花費鑽石
+var price=20;
+//買一次獲得次數
+var once=1;
+//每天免費次數(每關)
+var free_1day=10;
+//贏
+var win_gain=5;
+//輸
+var lose_gain=3;
+//每關體力
+//var perstamina=0;
+//默認每關道具
+//var default_gain=[5,5,5,5,5];
+//可刷起始關(音樂會專用?)
+//var reset_level=3;
+//==========參數設置完畢==========//
+
+var own=[];
+var calcind=1;
+
+window.onload = function(){
+	init();
+};
+
+function init(){
+	var table='<table border="1">';
+	table+=tr(td('套裝')+td('部位')+td('名稱'));
+	table+=tr(td(remark('*勾選代表已有/不需要部件'),'colspan="3"'));
+	var pos=0;
+	for (var s in set){
+		var line=td('<input type="checkbox" id="all'+s+'" onclick=checkall('+s+') >'+set[s]);
+		var cell1=''; var cell2='';
+		for (i=pos;i<pos+setCnt[s];i++){
+			cell2+='<input type="checkbox" id="own'+i+'" onclick=calc() >'+cname[i]+'<br>';
+			cell1+=type[i]+'<br>';
+		}
+		pos+=setCnt[s];
+		line+=td(cell1,'style="border-right-width:0"')+td(cell2,'style="border-left-width:0"');
+		table+=tr(line);
+	}
+	table+='</table>';
+	document.getElementById("table").innerHTML = table;
+	
+	var input='<table border="0">'+tr(td(''),'style="display:none"');
+	
+	//input+=tr(td('已領消費檔次：')+td(selectBox('already_consume','calc()',consume)),'class="consume"');
+	//input+=tr(td('預計消費檔次：')+td(selectBox('plan_consume','calc()',consume)),'class="consume"');
+	
+	input+=tr(td('當前'+item_name+'：')+td(inputBox('current','calc()')));
+	input+=tr(td('剩餘天數：')+td(inputBox('remain_days','calc()')));
+	input+=tr(td('今天剩餘次數：')+td(inputBox('remain_today','calc()')));
+	input+=tr(td('預計勝率(%)：')+td(inputBox('pct_exp','calc(1)')));
+	input+=tr(td('預計失敗場數：')+td(inputBox('wrong_exp','calc(2)')));
+	input+=tr(td(remark('&emsp;*預計項只需填寫一項，會自動計算另一項'),'colspan="2"'));
+	input+='</table>';
+	input+='<hr>';
+	document.getElementById("input").innerHTML = input;
+		
+	var date_now=new Date();
+	var time_now=date_now.getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	if(date_now.getHours()<5&&time_end-time_now>0){time_d+=1;}
+	setVal("remain_days", time_d);
+	setVal("remain_today", 0);
+	setVal('current', 0);
+	setVal('pct_exp', 100);
+	setVal('wrong_exp', 0);
+	setInterval(settime, 1000);
+	calc();
+}
+function checkall(n){
+	var pos=0;
+	for (i=0;i<n;i++){
+		pos+=setCnt[i];
+	}
+	if (document.getElementById('all'+n).checked){
+		for (i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=true;
+		}
+	}else{
+		for (i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=false;
+		}
+	};
+	calc();
+}
+function calc(ind){
+	if (!ind) {ind==calcind;}
+	calcind=ind;
+	
+	var remain_days=Math.max(0,getVal('remain_days'));
+	var remain_today=Math.max(0,getVal('remain_today'));
+	var current=Math.max(0,getVal('current'));
+	/*
+	var already_consume=Math.max(0,getVal('already_consume'));
+	var plan_consume=Math.max(0,getVal('plan_consume'));
+	
+	for (i=0;i<consume.length;i++){
+		if(consume[i]>already_consume&&consume[i]<=plan_consume){
+			current+=consume_gain[i];
+		}
+	}
+	
+	*/
+	for (i=0;i<need.length;i++){
+		if (document.getElementById('own'+i).checked){own[i]=1;}
+		else{own[i]=0;}
+	}
+	
+	var aim=0; for(i=0;i<need.length;i++){aim+=need[i]*(1-own[i]);}
+	var rem=aim-current;
+	var to_get_times=remain_days*level_cnt*free_1day+remain_today;
+	
+	if(ind==2){
+		var wrong_exp=Math.max(0,getVal('wrong_exp'));
+		var times=Math.ceil((rem-wrong_exp*lose_gain)/win_gain+wrong_exp);
+		setVal('pct_exp',Math.round((1-wrong_exp/times)*100));
+	}else{
+		var pct_exp=Math.max(0,Math.min(100,getVal('pct_exp')));
+		var exp=win_gain*pct_exp/100+lose_gain*(1-pct_exp/100);
+		var times=Math.ceil(rem/exp);
+		setVal('wrong_exp',Math.round(times*(1-pct_exp/100)));
+	}
+	
+	var diff_times=times-to_get_times;
+	var to_buy=Math.max(0,Math.ceil(diff_times/once));
+	var to_pay=to_buy*price;
+	
+	var calcres='<table>'+tr(td('計算結果：'));
+	calcres+=tr(td('共需'+aim+'個'+item_name+'，扣除已有還需刷'+rem+'個'));
+	calcres+=tr(td('約需選擇'+times+'次（其中免費'+to_get_times+'次）'));
+	calcres+=tr(td('還需購買'+to_buy+'次，花鑽'+to_pay+'個'));
+	calcres+='</table>';
+	document.getElementById("calcres").innerHTML = calcres;
+	
+	/*
+	if(to_pay>plan_consume){
+		for(i=0;i<consume.length;i++){
+			if(to_pay<consume[i]) {setVal("plan_consume",consume[i-1]); break;}
+		}
+		if(to_pay>consume[consume.length-1]){setVal("plan_consume",consume[consume.length-1]);}
+		calc();
+	}
+	*/
+}
+function loadSettings(){
+	if (typeof(Storage) !== "undefined" && localStorage.getItem("nikki_concert")) {
+		var loadString=localStorage.getItem("nikki_concert");
+		
+		var own_str=getStoredStr(loadString, 'own').split(',');
+		for (i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
+		
+		calc();
+	}
+}
+function getStoredStr(string, id){
+	var start=string.indexOf(id+':[')+(id+':[').length;
+	return string.substr(start,string.substr(start).indexOf('];'));
+}
+function saveSettings(){
+	var saveString='own:['+own.join(',')+'];';
+	//own:[1,1,0,0,0];
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("nikki_concert", saveString);
+	}
+	document.getElementById('storage').innerHTML=saveString;
+}
+function settime(){
+	var time_now=new Date().getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	var time_h = Math.max(0,Math.floor((time_end-time_now)/1000/60/60)%24);
+	var time_m = Math.max(0,Math.floor((time_end-time_now)/1000/60)%60);
+	var time_s = Math.max(0,Math.floor((time_end-time_now)/1000)%60);
+	document.getElementById("showTime").innerHTML = time_d + "天" + time_h + "時" + time_m + "分" + time_s + "秒";
+};
+function getVal(id){
+	return noNaN(parseInt(document.getElementById(id).value));
+}
+function setVal(id,val){
+	document.getElementById(id).value=val;
+}
+function noNaN( n ) {
+	return isNaN( n ) ? 0 : n;
+}
+function td(text,attr){
+	return '<td'+(attr?' '+attr:'')+'>'+text+'</td>';
+}
+function tr(text,attr){
+	return '<tr'+(attr?' '+attr:'')+'>'+text+'</tr>';
+}
+function remark(text){
+	return '<span class="remark">'+text+'</span>';
+}
+function inputBox(id,onchange,size){
+	return '<input type="text" id="'+id+'" onkeyup='+onchange+(size?' size="'+size+'"':'')+'>';
+}
+function selectBox(id,onchange,valArr,textArr){
+	var ret='<select id="'+id+'" onchange='+onchange+'>';
+	if(!textArr){textArr=valArr;}
+	for (var i in valArr){
+		ret+='<option value="'+valArr[i]+'">'+textArr[i]+'</option>';
+	}
+	ret+='</select>';;
+	return ret;
+}
+</script>
+</head>
+
+<body>
+<div class="sixteen columns">
+<div class="h-border">
+<div class="heading">
+<h1>活動名稱</h1>
+</div>
+</div>
+</div>
+<p><strong>更新時間：</strong>2018.07.09<br/><strong>作者：</strong>Rean翎<br/>
+<strong>繁體化：</strong>莫默墨陌<br/>
+<strong>使用說明：</strong>根據自己的勝率調整，【懷錶】獲取情況請參考<a href="20170710alice.html" target="framemain">活動說明</a><br/></p>
+<hr/>
+<p align="center">距離活動結束還有　<span id="showTime"></span><br>
+<button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
+</p>
+<p id="table" align="center"></p>
+<p id="input" align="center"></p>
+<p id="calcres" align="center"></p>
+<p id="storage" style="display:none"></p>
+</body>
+</html>
