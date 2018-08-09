@@ -24,13 +24,15 @@ time, mark, audio, video {
 }
 */
 /* HTML5 display-role reset for older browsers */
+/* 修正粗體 */
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
 	line-height: 1;
-	font-family: Microsoft JhengHei;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #4b4b4b;
 }
 
@@ -38,7 +40,7 @@ table {
 	border:solid #999;
 	border-width:1px 0px 0px 1px;
 	border-spacing:0;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.5em;
 }
@@ -64,7 +66,7 @@ tr:nth-child(2n) {
 
 tr:nth-child(1) {
 	font-size: 100%;
-	font-weight : 700;
+	font-weight : 500;
 	text-align : center;
 	background-color: rgba(227, 227, 227, 0.9);
 }
@@ -72,7 +74,7 @@ tr:nth-child(1) {
 /*************P的***************/ 
 p.indenttext {
 	font-size: 90%;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.8em;
 	text-indent:1em;
@@ -80,7 +82,7 @@ p.indenttext {
 
 p.center {
 	font-size: 90%;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.8em;
 	text-align: center;
@@ -88,7 +90,7 @@ p.center {
 
 p.normal,label,p.filter-table {
 	font-size: 100%;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.5em;
 }
@@ -100,35 +102,35 @@ p.normal br {
 
 p {
 	font-size: 100%;
-/*	font-weight : 500;*/
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-weight : 300;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.8em;
 }
 
 p.title {
 	font-size: 150%;
-	font-weight : 900;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-weight : 500;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #1F3489;
 	text-align: center;
 }
 p.title2 {
 	font-size: 150%;
-	font-weight : 700;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-weight : 500;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #1F3489;
 	text-align: center;
 }
 p.normal,label,p.filter-table {
 	font-size: 100%;
-	font-family: "Microsoft JhengHei", Sans-Serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
 	line-height: 1.5em;
 }
 
 span.title3 {
-	font-weight : 900;
+	font-weight : 500;
 	color: #111111;
 }
 /*************span的***************/ 
@@ -158,7 +160,7 @@ span.newguy {
  * 
  */
 body {
-	font-family: 'Microsoft JhengHei', sans-serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	/*overflow-y:hidden;*/
     margin-bottom:20px;
 }
@@ -173,8 +175,8 @@ body {
 	padding-right: 15px;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family: "Microsoft JhengHei", Sans-Serif;
-	font-weight: 900;
+	font-family: 'Noto Sans TC', sans-serif;
+	font-weight: 700;
 	text-transform: uppercase;
 	margin: 0;
 	padding: 0;
@@ -221,7 +223,7 @@ hr {
 }
 .main-nav a:link {
 	color: #4D4DFF;
-	font-family: 'Microsoft JhengHei', sans-serif;
+	font-family: 'Noto Sans TC', sans-serif;
 	font-weight: 300;
 	font-size: 1.2em;
 	line-height: 1.6em;
