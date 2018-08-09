@@ -54,12 +54,14 @@ td {
 tr:nth-child(2n+1) {
 	background: rgba(252, 252, 252, 0.7);
 	font-size: 90%;
+	font-weight : 300;
 	text-align : left;
 	text-align : center;
 }
 tr:nth-child(2n) {
 	background: rgba(219, 219, 255, 0.5);
 	font-size: 90%;
+	font-weight : 300;
 	text-align : left;
 	text-align : center;
 }
