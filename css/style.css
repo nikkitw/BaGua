@@ -103,7 +103,7 @@ p.normal br {
 }
 
 p {
-	font-size: 100%;
+	font-size: 90%;
 	font-weight : 300;
 	font-family: 'Noto Sans TC', sans-serif;
 	color: #111111;
@@ -111,7 +111,7 @@ p {
 }
 
 p.title {
-	font-size: 150%;
+	font-size: 120%;
 	font-weight : 500;
 	font-family: 'Noto Sans TC', sans-serif;
 	color: #1F3489;
@@ -179,6 +179,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Noto Sans TC', sans-serif;
 	font-weight: 700;
+	font-size: 140%;
 	text-transform: uppercase;
 	margin: 0;
 	padding: 0;
