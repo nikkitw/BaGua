@@ -54,33 +54,26 @@ td {
 tr:nth-child(2n+1) {
 	background: rgba(252, 252, 252, 0.7);
 	font-size: 90%;
-	font-weight : 300;
+	font-weight : 400;
 	text-align : left;
 	text-align : center;
 }
 tr:nth-child(2n) {
 	background: rgba(219, 219, 255, 0.5);
 	font-size: 90%;
-	font-weight : 300;
+	font-weight : 400;
 	text-align : left;
 	text-align : center;
 }
 
 tr:nth-child(1) {
 	font-size: 100%;
-	font-weight : 500;
+	font-weight : 600;
 	text-align : center;
 	background-color: rgba(227, 227, 227, 0.9);
 }
 
 /*************P的***************/ 
-p.indenttext {
-	font-size: 90%;
-	font-family: 'Noto Sans TC', sans-serif;
-	color: #111111;
-	line-height: 1.8em;
-	text-indent:1em;
-}
 
 p.center {
 	font-size: 90%;
@@ -179,7 +172,6 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Noto Sans TC', sans-serif;
 	font-weight: 800;
-	font-size: 145%;
 	text-transform: uppercase;
 	margin: 0;
 	padding: 0;
