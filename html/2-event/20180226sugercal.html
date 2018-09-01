@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>輕甜回憶 翻糖二選一計算器</title>
+<title>翻糖二選一計算器</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" type="text/css" href="../../css/style.css" />
 <style>
@@ -16,7 +16,7 @@ td {text-align:left;}
 	var time_end=new Date("3/4/2018 23:59:59 GMT+0800").getTime();
 	//部件類別
 	var type=[
-	'髮型','連身裙','襪套','鞋子','特殊·前景','頭飾·髮飾,','耳飾','手飾·右','手飾·左'
+	'髮型','連身裙','襪套','鞋子','特殊·前景','頭飾·髮飾','耳飾','手飾·右','手飾·左'
 	];
 	//部件名稱
 	var cname=[
@@ -67,7 +67,7 @@ td {text-align:left;}
 	
 	function init(){
 	if(need[0]==0) document.getElementById("notice").innerHTML = '<br>尚未更新，請勿使用！';
-	var table='<table border="1">';
+	var table='<table border="1" >';
 	table+=tr(td('套裝')+td('部位')+td('名稱')+td('所需'));
 	table+=tr(td(remark('*勾選代表已有/不需要部件'),'colspan="4"'));
 	var pos=0;
@@ -260,7 +260,7 @@ td {text-align:left;}
 <div class="sixteen columns">
 <div class="h-border">
 <div class="heading">
-<h1>輕甜回憶 翻糖二選一計算器</h1>
+<h1>翻糖二選一計算器</h1>
 </div>
 </div>
 </div>
