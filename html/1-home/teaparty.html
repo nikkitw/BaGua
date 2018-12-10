@@ -5,67 +5,196 @@
 <title>茶會題庫</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+#myTable th, #myTable td {
+  text-align: left;
+}
+</style>
 </head>
 
+
 <body>
-<div class="sixteen columns">
+
+	<div class="sixteen columns">
 		<div class="h-border">
 			<div class="heading">
 				<h1>茶會題庫</h1>
 			</div>
 		</div>
 	</div>
-	<p><b>更新時間：</b>2018.06.25</p>
+	<p><b>更新時間：</b>2018.12.10</p>
 	<hr>
-	
-<section>
-  <div class="search-form"><input id="search-input" type="text" placeholder="搜尋線索" /><button>搜尋</button>
-    <style id="m-search"></style>
-  </div></div>
 
-<div class="wrap" data-index="線索：1.莉莉斯東部沿海岸　2.尼德霍格　3.一年一度的某天會有很多設計師聚集在這裡　4.(缺)"><div class="name" style="color:black">線索：1.莉莉斯東部沿海岸　2.尼德霍格　3.一年一度的某天會有很多設計師聚集在這裡　4.(缺)　答案：溫特蒙</div></div>
-<div class="wrap" data-index="線索：1.路易　2.尼德霍格　3.被搶走的設計圖　4.凌雲城之圍"><div class="name" style="color:black">線索：1.路易　2.尼德霍格　3.被搶走的設計圖　4.凌雲城之圍　答案：綾羅</div></div>
-<div class="wrap" data-index="線索：1.幻影　2.雲端　3.古樓　4.扶蘇"><div class="name" style="color:black">線索：1.幻影　2.雲端　3.古樓　4.扶蘇　答案：花田</div></div>
-<div class="wrap" data-index="線索：1.通緝犯　2.白櫻戀歌　3.尼德霍格　4.狙擊手"><div class="name" style="color:black">線索：1.通緝犯　2.白櫻戀歌　3.尼德霍格　4.狙擊手　答案：灰影</div></div>
-<div class="wrap" data-index="線索：1.南風碧羽　2.提親　3.彈琴　4.雲端四大家族之一"><div class="name" style="color:black">線索：1.南風碧羽　2.提親　3.彈琴　4.雲端四大家族之一　答案：祝羽弦</div></div>
-<div class="wrap" data-index="線索：1.崇拜神靈　2.古老神秘　3.迷沙部落　4.原始野性"><div class="name" style="color:black">線索：1.崇拜神靈　2.古老神秘　3.迷沙部落　4.原始野性　答案：荒原共和國</div></div>
-<div class="wrap" data-index="線索：1.眷戀自然　2.旅遊勝地　3.民風淳樸　4.信鴿北部"><div class="name" style="color:black">線索：1.眷戀自然　2.旅遊勝地　3.民風淳樸　4.信鴿北部　答案：海蒂小鎮</div></div>
-<div class="wrap" data-index="線索：1.雲端帝國　2.護國大將軍　3.戎馬天下　4.手中長劍在，力能頂千斤！"><div class="name" style="color:black">線索：1.雲端帝國　2.護國大將軍　3.戎馬天下　4.手中長劍在，力能頂千斤！　答案：越千霜</div></div>
-<div class="wrap" data-index="線索：1.怪盜家族　2.舞台明星　3.鐘樓幻影　4.西西亞劇院"><div class="name" style="color:black">線索：1.怪盜家族　2.舞台明星　3.鐘樓幻影　4.西西亞劇院　答案：索菲亞</div></div>
-<div class="wrap" data-index="線索：1.溫柔　2.召喚暖暖　3.王室成員　4.莉莉絲王國"><div class="name" style="color:black">線索：1.溫柔　2.召喚暖暖　3.王室成員　4.莉莉絲王國　答案：娜娜莉女王</div></div>
-<div class="wrap" data-index="線索：1.尼德霍格　2.薔薇聖地　3.設計師茶話會　4.莉莉斯東部沿海地區"><div class="name" style="color:black">線索：1.尼德霍格　2.薔薇聖地　3.設計師茶話會　4.莉莉斯東部沿海地區　答案：溫特蒙</div></div>
-<div class="wrap" data-index="線索：1.壞女人　2.性感　3.排行第九　4.鐵薔薇軍團"><div class="name" style="color:black">線索：1.壞女人　2.性感　3.排行第九　4.鐵薔薇軍團　答案：梅拉</div></div>
-<div class="wrap" data-index="線索：1.她們比拼的是學者係服裝。　2.蘭薩擅長祭祀裝扮的搭配。　3.黛奧比擅長學者係服裝搭配。　4.梅拉擅長性感夜店風格的服裝搭配。"><div class="name" style="color:black">線索：1.她們比拼的是學者係服裝。　2.蘭薩擅長祭祀裝扮的搭配。　3.黛奧比擅長學者係服裝搭配。　4.梅拉擅長性感夜店風格的服裝搭配。　答案：黛奧比</div></div>
-<div class="wrap" data-index="線索：1.白錦錦：「我最近沒來過暖暖小屋。」　2.大喵：「像是蘇蘇畫的，她以前也畫過一個醜醜的五花肉。」　3.海櫻：「這幅作品，很像大喵的手筆。」 　4.蘇蘇：「大喵胡說，我怎麼可能在暖暖的牆上亂畫。」"><div class="name" style="color:black">線索：1.白錦錦：「我最近沒來過暖暖小屋。」　2.大喵：「像是蘇蘇畫的，她以前也畫過一個醜醜的五花肉。」　3.海櫻：「這幅作品，很像大喵的手筆。」 　4.蘇蘇：「大喵胡說，我怎麼可能在暖暖的牆上亂畫。」　答案：大喵</div></div>
-<div class="wrap" data-index="線索：1.大喵吃了五塊　2.黛奧比吃了兩塊　3.啵啵皺著眉，表示不太想吃　4.大喵摸了摸自己的肚子，表示很滿足"><div class="name" style="color:black">線索：1.大喵吃了五塊　2.黛奧比吃了兩塊　3.啵啵皺著眉，表示不太想吃　4.大喵摸了摸自己的肚子，表示很滿足　答案：大喵</div></div>
-<div class="wrap" data-index="線索：1.北地軍人　2.黑夜裁決　3.三月小兔　4.凌雲城之圍"><div class="name" style="color:black">線索：1.北地軍人　2.黑夜裁決　3.三月小兔　4.凌雲城之圍　答案：尼德霍格</div></div>
-<div class="wrap" data-index="線索：1.白櫻戀歌　2.玫瑰與槍　3.失去記憶　4.啟明星下的槍聲"><div class="name" style="color:black">線索：1.白櫻戀歌　2.玫瑰與槍　3.失去記憶　4.啟明星下的槍聲　答案：弗里恩 </div></div>
-<div class="wrap" data-index="線索：1.兔女郎　2.粉色短髮　3.千金小姐　4.羲龍家族"><div class="name" style="color:black">線索：1.兔女郎　2.粉色短髮　3.千金小姐　4.羲龍家族　答案：白錦錦</div></div>
-<div class="wrap" data-index="線索：1.信鴿王國　2.紫發劍客　3.行俠仗義　4.夢幻搭配賽序曲"><div class="name" style="color:black">線索：1.信鴿王國　2.紫發劍客　3.行俠仗義　4.夢幻搭配賽序曲　答案：艾思</div></div>
-<div class="wrap" data-index="線索：1.一國首都　2.瓦爾納河　3.暗夜與繁花　4.雨中修道院"><div class="name" style="color:black">線索：1.一國首都　2.瓦爾納河　3.暗夜與繁花　4.雨中修道院　答案：奧倫城</div></div>
-<div class="wrap" data-index="線索：1.她們各穿了藍瓷、玲瓏百福和採茶曲　2.小滿穿著採茶曲裙子　3.沒有人穿著配套的上衣和裙子　4.蘇蘇穿著藍瓷上衣"><div class="name" style="color:black">線索：1.她們各穿了藍瓷、玲瓏百福和採茶曲　2.小滿穿著採茶曲裙子　3.沒有人穿著配套的上衣和裙子　4.蘇蘇穿著藍瓷上衣　答案：暖暖</div></div>
-<div class="wrap" data-index="線索：1.啵啵：我不愛吃香橙，但有一個人點了香橙味的飲料。　2.海櫻：西瓜味的飲料不是我的，也不是啵啵的。　3.大喵：海櫻當然會點蘋果味的飲料啦！　4.暖暖：我的飲料不是西瓜味的。"><div class="name" style="color:black">線索：1.啵啵：我不愛吃香橙，但有一個人點了香橙味的飲料。　2.海櫻：西瓜味的飲料不是我的，也不是啵啵的。　3.大喵：海櫻當然會點蘋果味的飲料啦！　4.暖暖：我的飲料不是西瓜味的。　答案：暖暖</div></div>
-<div class="wrap" data-index="線索：1.小羊：雖然覺得不可思議，但很可能是海櫻做的　2.海櫻：我才不會幹這麼無聊的事呢　3.大喵：如果是小羊打掃的，蘇蘇肯定也幫忙啦　4.蘇蘇：我沒有掃呀，大喵這麼懶肯定也沒掃"><div class="name" style="color:black">線索：1.小羊：雖然覺得不可思議，但很可能是海櫻做的　2.海櫻：我才不會幹這麼無聊的事呢　3.大喵：如果是小羊打掃的，蘇蘇肯定也幫忙啦　4.蘇蘇：我沒有掃呀，大喵這麼懶肯定也沒掃　答案：海櫻 </div></div>
-<div class="wrap" data-index="線索：1.小羊：我覺得是啵啵吃的。　2.啵啵：肯定不是我吃的！　3.海櫻：大喵自己吃了吧。　4.蘇蘇：哈哈，沒準是海櫻偷偷吃了呢～"><div class="name" style="color:black">線索：1.小羊：我覺得是啵啵吃的。　2.啵啵：肯定不是我吃的！　3.海櫻：大喵自己吃了吧。　4.蘇蘇：哈哈，沒準是海櫻偷偷吃了呢～　答案：啵啵</div></div>
-<div class="wrap" data-index="線索：1.大喵：第一盒裡是五花肉，第三個盒子是空的　2.蘇蘇：第二個盒子是空的，第四盒裡是五花肉　3.暖暖：第二個盒子是空的，第五盒裡是五花肉　4.海櫻：第四個盒子是空的，第五盒裡是五花肉"><div class="name" style="color:black">線索：1.大喵：第一盒裡是五花肉，第三個盒子是空的　2.蘇蘇：第二個盒子是空的，第四盒裡是五花肉　3.暖暖：第二個盒子是空的，第五盒裡是五花肉　4.海櫻：第四個盒子是空的，第五盒裡是五花肉　答案：第一和第三盒</div></div>
-</section>
-<script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script >/*
- my friend Dca Hsu make it for plugin: https://github.com/dca/jquery-msearch
-*/
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="尋找問題.." title="Type in a name">
+<table id="myTable" width="100%">
+<tr class="header">
+<td>序號</td>
+<td>線索</td>
+<td>答案</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.莉莉斯東部沿海岸<br>2.尼德霍格<br>3.一年一度的某天會有很多設計師聚集在這裡<br>4.(缺)</td>
+<td>溫特蒙</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.路易<br>2.尼德霍格<br>3.被搶走的設計圖<br>4.凌雲城之圍</td>
+<td>綾羅</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1.幻影<br>2.雲端<br>3.古樓<br>4.扶蘇</td>
+<td>花田</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1.通緝犯<br>2.白櫻戀歌<br>3.尼德霍格<br>4.狙擊手</td>
+<td>灰影</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1.南風碧羽<br>2.提親<br>3.彈琴<br>4.雲端四大家族之一</td>
+<td>祝羽弦</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1.崇拜神靈<br>2.古老神秘<br>3.迷沙部落<br>4.原始野性</td>
+<td>荒原共和國</td>
+</tr>
+<tr>
+<td>7</td>
+<td>1.眷戀自然<br>2.旅遊勝地<br>3.民風淳樸<br>4.信鴿北部</td>
+<td>海蒂小鎮</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1.雲端帝國<br>2.護國大將軍<br>3.戎馬天下<br>4.手中長劍在，力能頂千斤！</td>
+<td>越千霜</td>
+</tr>
+<tr>
+<td>9</td>
+<td>1.怪盜家族<br>2.舞台明星<br>3.鐘樓幻影<br>4.西西亞劇院</td>
+<td>索菲亞</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1.溫柔<br>2.召喚暖暖<br>3.王室成員<br>4.莉莉絲王國</td>
+<td>娜娜莉女王</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1.尼德霍格<br>2.薔薇聖地<br>3.設計師茶話會<br>4.莉莉斯東部沿海地區</td>
+<td>溫特蒙</td>
+</tr>
+<tr>
+<td>12</td>
+<td>1.壞女人<br>2.性感<br>3.排行第九<br>4.鐵薔薇軍團</td>
+<td>梅拉</td>
+</tr>
+<tr>
+<td>13</td>
+<td>1.她們比拼的是學者係服裝。<br>2.蘭薩擅長祭祀裝扮的搭配。<br>3.黛奧比擅長學者係服裝搭配。<br>4.梅拉擅長性感夜店風格的服裝搭配。</td>
+<td>黛奧比</td>
+</tr>
+<tr>
+<td>14</td>
+<td>1.白錦錦：「我最近沒來過暖暖小屋。」<br>2.大喵：「像是蘇蘇畫的，她以前也畫過一個醜醜的五花肉。」<br>3.海櫻：「這幅作品，很像大喵的手筆。」<br>4.蘇蘇：「大喵胡說，我怎麼可能在暖暖的牆上亂畫。」</td>
+<td>大喵</td>
+</tr>
+<tr>
+<td>15</td>
+<td>1.大喵吃了五塊<br>2.黛奧比吃了兩塊<br>3.啵啵皺著眉，表示不太想吃<br>4.大喵摸了摸自己的肚子，表示很滿足</td>
+<td>大喵</td>
+</tr>
+<tr>
+<td>16</td>
+<td>1.北地軍人<br>2.黑夜裁決<br>3.三月小兔<br>4.凌雲城之圍</td>
+<td>尼德霍格</td>
+</tr>
+<tr>
+<td>17</td>
+<td>1.白櫻戀歌<br>2.玫瑰與槍<br>3.失去記憶<br>4.啟明星下的槍聲</td>
+<td>弗里恩</td>
+</tr>
+<tr>
+<td>18</td>
+<td>1.兔女郎<br>2.粉色短髮<br>3.千金小姐<br>4.羲龍家族</td>
+<td>白錦錦</td>
+</tr>
+<tr>
+<td>19</td>
+<td>1.信鴿王國<br>2.紫發劍客<br>3.行俠仗義<br>4.夢幻搭配賽序曲</td>
+<td>艾思</td>
+</tr>
+<tr>
+<td>20</td>
+<td>1.一國首都<br>2.瓦爾納河<br>3.暗夜與繁花<br>4.雨中修道院</td>
+<td>奧倫城</td>
+</tr>
+<tr>
+<td>21</td>
+<td>1.她們各穿了藍瓷、玲瓏百福和採茶曲<br>2.小滿穿著採茶曲裙子<br>3.沒有人穿著配套的上衣和裙子<br>4.蘇蘇穿著藍瓷上衣</td>
+<td>暖暖</td>
+</tr>
+<tr>
+<td>22</td>
+<td>1.啵啵：我不愛吃香橙，但有一個人點了香橙味的飲料。<br>2.海櫻：西瓜味的飲料不是我的，也不是啵啵的。<br>3.大喵：海櫻當然會點蘋果味的飲料啦！<br>4.暖暖：我的飲料不是西瓜味的。</td>
+<td>暖暖</td>
+</tr>
+<tr>
+<td>23</td>
+<td>1.小羊：雖然覺得不可思議，但很可能是海櫻做的<br>2.海櫻：我才不會幹這麼無聊的事呢<br>3.大喵：如果是小羊打掃的，蘇蘇肯定也幫忙啦<br>4.蘇蘇：我沒有掃呀，大喵這麼懶肯定也沒掃</td>
+<td>海櫻</td>
+</tr>
+<tr>
+<td>24</td>
+<td>1.小羊：我覺得是啵啵吃的。<br>2.啵啵：肯定不是我吃的！<br>3.海櫻：大喵自己吃了吧。<br>4.蘇蘇：哈哈，沒準是海櫻偷偷吃了呢～</td>
+<td>啵啵</td>
+</tr>
+<tr>
+<td>25</td>
+<td>1.大喵：第一盒裡是五花肉，第三個盒子是空的<br>2.蘇蘇：第二個盒子是空的，第四盒裡是五花肉<br>3.暖暖：第二個盒子是空的，第五盒裡是五花肉<br>4.海櫻：第四個盒子是空的，第五盒裡是五花肉</td>
+<td>第一和第三盒</td>
+</tr>
+</table>
+<script>
+function myFunction() {
+  // Declare variables 
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
 
-var that = $(this);
-var mSearch = $("#m-search");
-$("#search-input").bind("change paste keyup", function(){
-  var value = $(this).val();
-  if (!value) {
-    mSearch.html("");
-    return;
-  }; 
-  mSearch.html('.wrap:not([data-index*="' + value.toLowerCase() + '"]) {display: none;}');
-});
-
-//# sourceURL=pen.js
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 1; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
 </script>
+
 </body>
 </html>
