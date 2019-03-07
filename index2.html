@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+		<meta charset="utf-8" />
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+
+		<title>八卦樓</title>
+		<meta name="description" content="" />
+		<meta name="author" content="Austin" />
+
+		<!--Grab the Stylesheets-->
+		<link href =“https://fonts.googleapis.com/css?family= Noto + Sans ”rel =“stylesheet”>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="css/style_pc.css" />
+		<link rel="stylesheet" type="text/css" href="css/style_mobile.css" id="mycss"/>
+		<link href="css/flexslider.css" rel="stylesheet" type="text/css">
+		<link rel="icon" href="img/icon.png" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122120666-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-122120666-1');
+		</script>
+
+		<script type="text/javascript">
+		$(function(){		
+		try{
+	    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+					$("#Container").attr("url", "./img/background_mobile2.png");
+	        $("#mycss").attr("href","./css/style_mobile2.css");
+	    }else{	    		
+					$("#Container").attr("url", "./img/background_pc2.png");
+	        $("#mycss").attr("href","./css/style_pc2.css");
+	    }
+		}catch(e){}    
+
+		});
+		function frametarget(){
+			var location_href=window.location.href;
+			var jump_query=['index.html?','/?'];
+			for (var i in jump_query){
+				var location_href_pos=location_href.indexOf(jump_query[i]);
+				var conv_href=location_href.substr(location_href_pos+jump_query[i].length);
+				if (location_href_pos>0 && conv_href.indexOf('.html')>0 && conv_href.indexOf('//')<0){
+					$('iframe#framemain').attr('src',conv_href);
+					break;
+				}
+			}
+		}
+		window.onload = function(){ 
+			frametarget();
+			
+			$('#framemain').load(function() {
+				gotop();
+				
+				var cssLink = document.createElement("link");
+					cssLink.href = "css/overflow.css";
+					cssLink.rel = "stylesheet";
+					cssLink.type = "text/css";
+				var cssLink_2 = document.createElement("link");
+					cssLink_2.href = "css/overflow.css";
+					cssLink_2.rel = "stylesheet";
+					cssLink_2.type = "text/css";
+				frames['framemain'].document.body.appendChild(cssLink);
+				frames['framemain'].document.body.appendChild(cssLink_2);
+			});
+		};
+		</script>
+	</head>
+
+	<body>
+			
+		<!-- <header class="sixteen columns alpha omega"> -->
+				<!-- <a href="index.html"><img class="brand" src="img/logo2.png" alt="Tri"></a> -->
+	<!-- </header> -->
+<div class="FloatMenu"> 
+		<span><a href="#top" ><i class="fa fa-arrow-up fa-fw"></i></a></span><br>
+		<span><a href="index.html"  onclick="gotop()"><i class="fa fa-home fa-fw"></i></a></span><br>
+		<span><a href="https://www.facebook.com/NikkiTWBaGua/" target="_blank" onclick="gotop()"><i class="fa fa-facebook fa-fw"></i></a></span>
+	</div>
+<div id="Container" >
+	<div id = "Content-Main">
+		<p align="center"; style="font-size:20pt "><a href="miracle.html" target="_blank">奇迹暖暖攻略</a></p>
+		<p align="center"; style="font-size:20pt "><a href="#">閃耀暖暖攻略</a></p>
+<!--
+			<iframe id="nav" src="#" frameborder="0" width="100%" ></iframe>
+			<iframe name="framemain" src="#" frameborder="0" width="100%" id="framemain" onload="this.height=500" style="overflow-y:hidden;overflow-x:hidden;"></iframe>
+-->
+			<script type="text/javascript">
+				function reinitIframe(){
+					var iframe = document.getElementById("framemain");
+					try{
+						var bHeight = iframe.contentWindow.document.body.scrollHeight;
+						var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+						var fHeight = iframe.height;
+						if(dHeight&&fHeight){
+							if(dHeight>fHeight||dHeight<fHeight-500) {
+								iframe.height = Math.max(500, dHeight); 
+							}
+						}else{
+							iframe.height = Math.max(bHeight, dHeight+150);
+						}
+					}catch (ex){}
+				}
+				window.setInterval("reinitIframe()", 200);
+			</script> 
+		</div></div>
+
+	
+		<!--Grab JS Files-->
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/jquery.flexslider.js" ></script>
+		<script type="text/javascript">
+			// Can also be used with $(document).ready()
+			$(window).load(function() {
+			  $('.flexslider').flexslider({
+			    animation: "slide"
+			  });
+			});
+		</script>
+		<footer>© 2016-2018 奇迹暖暖攻略八卦樓 - All Rights Reserved</footer>
+		
+	</body>
+</html>
