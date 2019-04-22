@@ -1,0 +1,367 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+/*
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, 
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	font-family: Microsoft JhengHei;
+}
+*/
+/* HTML5 display-role reset for older browsers */
+/* 修正粗體 */
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #4b4b4b;
+}
+/* tables */
+
+table.tablesorter {
+	font-family:'Noto Sans TC', sans-serif;
+font-size: 90%;
+ text-align : center;width: 100%;
+border:solid #999;
+	border-width:1px 0px 0px 1px;
+	border-spacing:0;line-height: 1.5em;}
+
+
+td,th {
+	border:solid #999;
+	border-width:0px 1px 1px 0px;
+	border-spacing:0;
+}
+
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	font-weight : 600;  font-size: 100%;  background-color: rgba(255, 231, 231, 0.9);
+	text-align : center;
+}
+
+
+table.tablesorter thead tr .header {
+	background-image: url(../img/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+
+
+table.tablesorter tbody td {
+padding: 4px;
+	background-color: rgba(255,240,244,0.50);
+	vertical-align: top;
+}
+
+
+table.tablesorter tbody tr.odd td {
+	background-color:rgba(255, 231, 231, 0.7);
+}
+
+
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(../img/asc.gif);
+}
+
+
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(../img/desc.gif);
+}
+
+
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: rgba(255, 231, 231, 0.9);
+}
+
+
+/*************P的***************/ 
+
+p.center {
+	font-size: 90%;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #111111;
+	line-height: 1.8em;
+	text-align: center;
+}
+
+p.normal,label,p.filter-table {
+	font-size: 100%;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #111111;
+	line-height: 1.5em;
+}
+p.normal br {
+	display: block;
+	margin: 1.2em;
+	content: " ";
+}
+
+p {
+	font-size: 90%;
+	font-weight : 400;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #111111;
+	line-height: 1.8em;
+}
+
+p.title {
+	font-size: 150%;
+	font-weight : 700;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #1F3489;
+	text-align: center;
+}
+p.title2 {
+	font-size: 150%;
+	font-weight : 500;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #1F3489;
+	text-align: center;
+}
+p.normal,label,p.filter-table {
+	font-size: 100%;
+	font-family: 'Noto Sans TC', sans-serif;
+	color: #111111;
+	line-height: 1.5em;
+}
+
+span.title3 {
+	font-weight : 500;
+	color: #111111;
+}
+/*************span的***************/ 
+span.comment {
+	color: #000000;
+}
+
+span.top {
+	color: #0050FF;
+}
+
+span.instead {
+	color: #111111;
+}
+
+span.general {
+	color: #111111;
+}
+
+span.newguy {
+	color: #111111;
+}
+
+ /*
+ *
+ *********  Tri - *Typography*
+ * 
+ */
+body {
+	font-family: 'Noto Sans TC', sans-serif;
+	/*overflow-y:hidden;*/
+    margin-bottom:20px;
+}
+.heading h1, h2, h3, h4, h5, h6 {
+	margin-right: auto;
+	margin-left: auto;
+	background: #fff;
+	display: inline;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Noto Sans TC', sans-serif;
+	font-weight: 800;
+	text-transform: uppercase;
+	margin: 0;
+	padding: 0;
+}
+a {
+	font-size: 100%;
+	color: #8C6D8F;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:none;
+	color:#DD4D57;
+}
+.h-border {
+	border-top: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.heading {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	background-image: url(../img/cross-pattern.png);
+	background-repeat: repeat;
+	
+}
+
+footer h2, h3, h4, h5, h6 {
+	background: none;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+}
+hr {
+	border: none;
+	background: #FFE7E7;
+	height: 1px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.main-nav a:link {
+	color: #8C6D8F;
+	font-family: 'Noto Sans TC', sans-serif;
+	font-weight: 400;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	text-decoration: none;
+	-webkit-transition: color .25s ease;
+	   -moz-transition: color .25s ease;
+	    -ms-transition: color .25s ease;
+	     -o-transition: color .25s ease;
+	        transition: color .25s ease;
+}
+.main-nav a:visited {
+	color: #8C6D8F;
+}
+.main-nav a:hover {
+	color: #DD4D57;
+}
+
+.main-nav {
+	margin-top: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-top: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
+}
+.main-nav li {
+	display: inline;
+	margin-right: 5px;
+}
+.brand {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10px;
+	display: block;
+	opacity: .95;
+	-webkit-transition: opacity .25s ease;
+	   -moz-transition: opacity .25s ease;
+	    -ms-transition: opacity .25s ease;
+	     -o-transition: opacity .25s ease;
+	        transition: opacity .25s ease;
+}
+.brand:hover {
+	opacity: 1;
+}
+.social a:link {
+	float: right;
+	background-image: url(../img/facebook.png);
+	width: 30px;
+	height: 30px;
+	background-position: 0 -30px;
+	-webkit-transition: background-position .3s ease;
+	   -moz-transition: background-position .3s ease;
+	     -o-transition: background-position .3s ease;
+	        transition: background-position .3s ease;
+	margin-left: 2px;
+
+}
+.social a:hover {
+	background-position: 0 0;
+}
+
+footer {
+	background: #4b4b4b;
+	padding: 5px;
+	color: #fff;
+	opacity: .45;
+	-webkit-transition: opacity .25s ease;
+	text-align: center;
+}
+footer:hover {
+	opacity: 1;
+}
+footer p{
+	text-align: left;
+}
+footer ul {
+	float: right;
+}
+footer li {
+	display: inline;
+	margin-left: 15px;
+}
+footer a:link {
+	text-decoration: none;
+	color: #e3e3e3;
+}
+footer a:visited {
+	color: #e3e3e3;
+}
+
+.FloatMenu {
+    position:fixed;
+    right:1%;
+    top:50%;
+    min-height:20px;
+    border:0; 
+    padding:0;
+    margin:0;
+    background-color: rgba(0, 0, 0, 0);  
+    z-index:5;
+}
+
+.FloatMenu li {
+  list-style-type:none;
+}
+
+.FloatMenu span {
+  border:1px solid #999;
+  border-radius:5px;
+  display:inline-block;
+  padding:3px 8px;
+  margin:8px;
+  text-decoration:none;
+  background-color:#ffffff; /*可改顏色*/
+  position:relative; 
+}
+
+.FloatMenu span a {
+	text-decoration:none;
+	color:#333333;
+}
+
+.FloatMenu span:hover{
+    background:#E1E1E1;/*可改顏色*/
+    border:1px solid #919394;
+    color:#000
+}
