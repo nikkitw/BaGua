@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -32,9 +33,9 @@ var need = [1188,792,528,528,1500,750,750,1500,2250,3750,990,264,528,330,198,528
 //每套部件數量
 var setCnt = [19];
 //禮包名字
-var pack = ['鑰匙禮包','稀有鑰匙','普通鑰匙'];
+var pack = ['鑰匙禮包','稀有鑰匙','普通鑰匙','隨機印象'];
 //禮包價格
-var packNeed = [10,10,4];
+var packNeed = [10,10,4,50];
 //禮包最大購買數
 var packMax = [10,15,50];
 //道具名稱
@@ -125,7 +126,7 @@ function init(){
 		//line+=td(cell1,'style="border-right-width:0"')+td(cell2,'style="border-left-width:0"');
 		table += tr(line);
 	}
-	table += tr(td('*每周購買禮包','colspan="4" class="remark"'));
+	table += tr(td('*每週購買禮包','colspan="4" class="remark"'));
 	var cell1 = []; var cell2 = []; var cell3 = [];
 	for (i=0; i<pack.length; i++){
 		cell1.push(pack[i]);
