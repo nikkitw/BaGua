@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>雪原追迹計算器</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+.remark{font-size:80%;}
+td {text-align:left;}
+</style>
+<script type="text/javascript" charset="UTF-8">
+//結束時間
+var time_end=new Date("2/6/2020 23:59:59 GMT+0800").getTime();
+//開始時間
+var time_start=new Date("1/31/2020 5:00:00 GMT+0800").getTime();
+//部件類別
+var type=['髮型','連身裙','外套','鞋子','特殊*前景','頭飾*髮飾','手持*右','頸飾*圍巾','妝容',
+	'髮型','連身裙','外套','襪子','鞋子','頭飾*髮飾','手持*左','特殊*胸飾','手飾*左'];
+//部件名稱
+var cname=['烏雲之女','雪域長謠','純白獻禮','萬里尋踪','雪山守護者','千珠八寶','萬福之祝','群山落雲','天山碧水',
+	'積寒素心','夕華靜沉','雪映晚霞','羅衣明彩','覆霜履冰','紅緋淩霜','雪域長春','落梅綉緞','大醫精誠'];
+//套裝名稱
+var set=['雪域長謠','凜霜緋華'];
+//單價
+var need=[[115,100,0],[120,0,0],[100,80,0],[85,75,0],[130,0,0],[80,70,0],[80,65,0],[65,60,0],[125,0,0],
+	[0,0,125],[0,0,140],[0,0,125],[0,90,100],[0,95,105],[0,70,90],[0,70,85],[0,65,70],[0,60,60]];
+var need_sp=[0,20,0,0,19,0,0,0,19,
+	20,19,18,0,0,0,0,0,0];
+//每套部件數量
+var setCnt=[9,9];
+//道具名稱
+var item_name=['綠松石','琉璃石','琥珀石'];
+var item_name_sp='雪玉石';
+//可刷關卡名,對應道具順序,關卡數量應與普通道具數量一樣
+var level_name=[1,2,5];
+var level_cnt=item_name.length;
+//買一次花費鑽石
+var price=30;
+//買一次獲得次數
+var once=5;
+//每天免費次數(每關)
+var free_1day=5;
+//默認每關道具
+var default_gain=[5,5,5];
+//==========參數設置完畢==========//
+var own=[];
+
+window.onload = function(){
+	init();
+};
+
+function init(){
+	if(sumArr(need[0])==0) document.getElementById("notice").innerHTML = '<br>尚未更新，請勿使用！';
+	var table='<table border="1">';
+	var names = '';
+	for (var j=0; j<level_cnt; j++) names += item_name[j].substr(0,1) + '/';
+	names+=item_name_sp.substr(0,1);
+	table+=tr(td('套裝')+td('部位')+td('名稱')+td(names,'colspan="'+(level_cnt+1)+'"'));
+	table+=tr(td(remark('*勾選代表已有/不需要部件'),'colspan="'+ (4+level_cnt+1) +'"'));
+	var pos=0;
+	for (var s in set){
+		var line=td('<label><input type="checkbox" id="all'+s+'" onclick=checkall('+s+') >'+set[s]+'</label>');
+		var cell1=''; var cell2=''; var cell3=[]; var cell4='';
+		for (var i=pos;i<pos+setCnt[s];i++){
+			cell2+='<label><input type="checkbox" id="own'+i+'" onclick=calc() >'+cname[i]+'</label><br>';
+			cell1+=type[i]+'<br>';
+			for (var j=0; j<level_cnt; j++){
+				if (i==pos) cell3.push('');
+				cell3[j]+=need[i][j]+'<br>';
+			}
+			cell4+=need_sp[i]+'<br>';
+		}
+		pos+=setCnt[s];
+		line+=td(cell1,'style="border-right-width:0"');
+		line+=td(cell2,'style="border-left-width:0;border-right-width:0"');
+		line+=td_items(cell3,cell4,'style="border-left-width:0;border-right-width:0"','style="border-left-width:0"');
+		table+=tr(line);
+	}
+	table+='</table>';
+	document.getElementById("table").innerHTML = table;
+	
+	var cell1=''; var cell2='';
+	for (var i=0;i<level_cnt;i++){
+		if (i>0) {cell1+='/'; cell2+='/';}
+		cell1+=inputBox('each_gain'+i,'calc()',2);
+		cell2+=inputBox('remain_today'+i,'calc()',2);
+	}
+	var input='<table border="0">'+tr(td(''),'style="display:none"');
+	for (var i=0; i<level_cnt; i++){
+		input+=tr(td('當前'+item_name[i]+'：')+td(inputBox('current'+i,'calc()')));
+	}
+	input+=tr(td('當前'+item_name_sp+'：')+td(inputBox('current_sp','calc()')));
+	input+=tr(td('每關掉落：')+td(cell1));
+	input+=tr(td(item_name_sp+'掉率：')+td(inputBox('drop_sp','calc()')));
+	input+=tr(td('剩餘天數：')+td(inputBox('remain_days','calc()')));
+	input+=tr(td('今日剩餘次數：')+td(cell2));
+	input+='</table>';
+	input+='<hr>';
+	document.getElementById("input").innerHTML = input;
+	
+	var date_now=new Date();
+	var time_now=date_now.getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	if(date_now.getHours()<5&&time_end-time_now>0){time_d+=1;}
+	setVal("remain_days", time_d);
+	for (i=0;i<level_cnt;i++){
+		if(date_now.getDate()==new Date(time_start).getDate()) setVal("remain_today"+i, free_1day);
+		else setVal("remain_today"+i, 0);
+		setVal("each_gain"+i, default_gain[i]?default_gain[i]:default_gain[default_gain.length-1]);
+		setVal('current'+i, 0);
+	}
+	setVal('current_sp', 0);
+	setVal('drop_sp', 0.2);
+	setInterval(settime, 1000);
+	calc();
+}
+function checkall(n){
+	var pos=0;
+	for (i=0;i<n;i++){
+		pos+=setCnt[i];
+	}
+	if (document.getElementById('all'+n).checked){
+		for (i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=true;
+		}
+	}else{
+		for (i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=false;
+		}
+	};
+	calc();
+}
+function calc(){
+	var remain_days=Math.max(0,getVal('remain_days'));
+	
+	var res_aim = []; var res_rem = []; var res_rem_free = []; var res_extra = [];
+	var res_times = []; var res_tobuy = []; var res_topay = []; var res_rem_times_free = [];
+	
+	for (i=0;i<need.length;i++){
+		if (document.getElementById('own'+i).checked) own[i]=1;
+		else own[i]=0;
+	}
+	
+	for (c=0; c<level_cnt; c++){
+		var remain_today=Math.max(0,getVal('remain_today'+c));
+		var each_gain=Math.max(0,getVal('each_gain'+c));
+		var rem_cnt_today=remain_today*each_gain;
+		var freegain_1day=each_gain*free_1day;
+		var current=Math.max(0,getVal('current'+c));
+		
+		var aim=0; var pos=0;
+		for (var s in setCnt){
+			for (i=pos;i<pos+setCnt[s];i++){
+				aim+=need[i][c]*(1-own[i]);
+			}
+			pos+=setCnt[s];
+		}
+		
+		var rem=Math.max(0,aim-current);
+		var rem_free=rem_cnt_today+freegain_1day*remain_days;
+		var extra=Math.max(0,rem-rem_free);
+		var times=Math.max(0,Math.ceil(extra/each_gain));
+		var to_buy=Math.max(0,Math.ceil(times/once));
+		var to_pay=to_buy*price;
+	
+		res_aim[c] = aim;
+		res_rem[c] = rem;
+		res_rem_free[c] = rem_free;
+		res_extra[c] = extra;
+		res_times[c] = times;
+		res_tobuy[c] = to_buy;
+		res_topay[c] = to_pay;
+		
+		rem_times_free = remain_today + free_1day * remain_days;
+		res_rem_times_free[c] = rem_times_free;
+	}
+	
+	var current_sp=Math.max(0,getVal('current_sp'));
+	var drop_sp=Math.max(0,noNaN(parseFloat(document.getElementById('drop_sp').value)));
+	var aim=0; var pos=0;
+	for (var s in setCnt){
+		for (i=pos;i<pos+setCnt[s];i++){
+			aim+=need_sp[i]*(1-own[i]);
+		}
+		pos+=setCnt[s];
+	}
+	var rem = Math.max(0,aim-current_sp);
+	var rem_free = Math.floor((sumArr(res_times)+sumArr(res_rem_times_free)) * drop_sp);
+	var extra = Math.max(0, rem - rem_free);
+	var times = Math.max(0, Math.ceil(rem/drop_sp) - sumArr(res_times) - sumArr(res_rem_times_free));
+	var to_buy = Math.ceil(times/once);
+	var to_pay = to_buy*price;
+	
+	var calcres='<table>'+tr(td('計算結果：'));
+	var res_aims = ''; var res_rems = ''; var res_extras = ''; var res_timess = ''; var res_tobuys = ''; 
+	for (c=0; c<level_cnt; c++){
+		res_aims += res_aim[c] + '個' + item_name[c] + '，';
+		res_rems += res_rem[c] + '個' + item_name[c] + '，';
+		res_extras += (c==0?'':'，') + res_extra[c] + '個' + item_name[c];
+		res_timess += (c==0?'':'/') + '第' + level_name[c] + '關' + res_times[c] + '次';
+		res_tobuys += (c==0?'':'/') + '第' + level_name[c] + '關' + res_tobuy[c] + '次';
+	}
+	calcres+=tr(td('共需' + res_aims + aim + '個' + item_name_sp));
+	calcres+=tr(td('扣除已有還需' + res_rems + rem + '個' + item_name_sp));
+	calcres+=tr(td('（扣除免費後需額外刷'+res_extras+'）'));
+	calcres+=tr(td('需額外刷'+res_timess+'，買'+res_tobuys+'，花鑽'+sumArr(res_topay)+'個（固定）'));
+	calcres+=tr(td('刷完後會獲得'+rem_free+'個'+item_name_sp+'，還缺'+extra+'個'));
+	calcres+=tr(td('需再刷'+times+'次，購買'+to_buy+'次，花鑽'+to_pay+'個（浮動）'));
+	calcres+=tr(td('<b>合計需額外購買'+(sumArr(res_tobuy)+to_buy)+'次，花鑽'+(sumArr(res_topay)+to_pay)+'個（浮動）</b>'));
+	calcres+='</table>';
+	document.getElementById("calcres").innerHTML = calcres;
+}
+function loadSettings(){
+	if (typeof(Storage) !== "undefined" && localStorage.getItem("nikki_fool2017")) {
+		var loadString=localStorage.getItem("nikki_fool2017");
+		
+		var own_str=getStoredStr(loadString, 'own').split(',');
+		for (i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
+		
+		var each_gain=getStoredStr(loadString, 'each_gain').split(',');
+		for (i=0;i<level_cnt;i++){setVal("each_gain"+i,each_gain[i]);}
+		
+		calc();
+	}
+}
+function getStoredStr(string, id){
+	var start=string.indexOf(id+':[')+(id+':[').length;
+	return string.substr(start,string.substr(start).indexOf('];'));
+}
+function saveSettings(){
+	var each_gain=[];
+	for (i=0;i<level_cnt;i++){each_gain.push(getVal("each_gain"+i));}
+	var saveString='own:['+own.join(',')+'];each_gain:['+each_gain.join(',')+'];';
+	//own:[1,1,0,0,0];each_gain:[3,3,5,5,5];
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("nikki_fool2017", saveString);
+	}
+	document.getElementById('storage').innerHTML=saveString;
+}
+function settime(){
+	var time_now=new Date().getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	var time_h = Math.max(0,Math.floor((time_end-time_now)/1000/60/60)%24);
+	var time_m = Math.max(0,Math.floor((time_end-time_now)/1000/60)%60);
+	var time_s = Math.max(0,Math.floor((time_end-time_now)/1000)%60);
+	document.getElementById("showTime").innerHTML = time_d + "天" + time_h + "時" + time_m + "分" + time_s + "秒";
+};
+function getVal(id){
+	return noNaN(parseInt(document.getElementById(id).value));
+}
+function setVal(id,val){
+	document.getElementById(id).value=val;
+}
+function noNaN( n ) {
+	return isNaN( n ) ? 0 : n;
+}
+function td(text,attr){
+	return '<td'+(attr?' '+attr:'')+'>'+text+'</td>';
+}
+function tr(text,attr){
+	return '<tr'+(attr?' '+attr:'')+'>'+text+'</tr>';
+}
+function remark(text){
+	return '<span class="remark">'+text+'</span>';
+}
+function inputBox(id,onchange,size){
+	return '<input type="text" id="'+id+'" onkeyup='+onchange+(size?' size="'+size+'"':'')+'>';
+}
+function selectBox(id,onchange,valArr,textArr){
+	var ret='<select id="'+id+'" onchange='+onchange+'>';
+	if(!textArr){textArr=valArr;}
+	for (var i in valArr){
+		ret+='<option value="'+valArr[i]+'">'+textArr[i]+'</option>';
+	}
+	ret+='</select>';;
+	return ret;
+}
+function sumArr(arr){
+	var sum = 0;
+	for (var i=0; i<arr.length; i++) sum += arr[i];
+	return sum;
+}
+function td_items(arr,sp,style1,style2){
+	var ret = '';
+	for (var i=0; i<arr.length; i++) ret += td(arr[i],style1);
+	ret += td(sp,style2);
+	return ret;
+}
+</script>
+
+</head>
+
+<body>
+<div class="sixteen columns">
+  <div class="h-border">
+    <div class="heading">
+      <h1>雪原追迹計算器</h1>
+    </div>
+  </div>
+</div>
+<p><strong>更新時間：</strong>2020.01.28<br/><strong>作者：</strong>Rean翎<br/>
+<strong>繁體化：</strong>莫默墨陌<br/>
+<strong>使用說明：</strong>【寶石】獲取情況請參考<a href="#" target="framemain">活動說明</a><br/></p>
+<hr/>
+<p align="center">距離活動結束還有　<span id="showTime"></span><br>
+<button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
+</p>
+<p id="table" align="center">
+<span id="radio"></span></p>
+<p id="input" align="center"></p>
+<p id="calcres" align="center"></p>
+<p id="storage" style="display:none"></p>
+</body>
+</html>
