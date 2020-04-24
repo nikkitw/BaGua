@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>旋階之庭計算器</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+.remark{font-size:80%;}
+td {text-align:left;}
+</style>
+<script type="text/javascript" charset="UTF-8">
+//注意：此模板只計算多道具情况下兌換所需數量，不考慮買幾次的計算
+
+//開始時間
+var time_start=new Date("4/27/2029 5:00:00 GMT+0800").getTime();
+//結束時間
+var time_end=new Date("5/6/2020 23:59:59 GMT+0800").getTime();
+//部件類別
+var type=[
+'髮型','妝容','連身裙','特殊*頂飾','特殊*地板','鞋子','頭飾*髮飾','耳飾','頸飾*項鍊','手飾*右','手飾*雙','特殊*翅膀','特殊*前景','特殊*後景',
+'髮型','妝容','連身裙','外套','特殊*前景','鞋子','頭飾*髮飾','耳飾','頸飾*項鍊','特殊*胸飾','手持*右','手飾*右','手飾*左',
+'妝容','連身裙','特殊*頂飾','髮型','鞋子','頭飾*髮夾','頭飾*髮飾','手持*右','手飾*雙','特殊*尾巴',
+'妝容','連身裙','特殊*地板','髮型','外套','鞋子','耳飾','手持*左','手持*右','特殊*紋身'
+];
+//部件名稱
+var cname=[
+'淺紫芬芳','純真睡顔','水晶晚宴','淡妝濃抹','時光雕零','搖曳舞步','飛珠碎玉','懵懂之夢','蝶舞花繁','薔薇榮耀','往事如烟','輕歌曼舞','溫柔魔法','歲月如塵',
+'一式橫斷','亂世國手','袖手斬龍','風雷起爭','縱橫道','布局機深','地火明夷','業火窮劫','連環幽鎖','朱鳶噬焰','落子無悔','乾坤憶夢','傾奪捭闔',
+'灼心月蝕','血刺陰影','雙面之月','猩紅魔影','幽暗權柄','血之花','王政冠冕','絕望銀匙','不可觸及','幽魄之影',
+'午夜之寐','假面之舞','白夜荊棘','寂靜之音','長夜霓虹','致命危險','溫柔妄言','誘惑之果','禁忌之吻','破碎之婪'
+];
+//套裝名稱
+var set=['流光逝夢','山河落局','詭魅妒影','闌夜之宴'];
+//單價
+var need=[
+[0,8],[0,7],[0,9],[0,7],[0,8],[12,0],[11,0],[9,0],[10,0],[9,0],[9,0],[14,0],[15,0],[12,0],
+[0,8],[0,7],[0,9],[0,8],[0,7],[12,0],[13,0],[10,0],[10,0],[12,0],[9,0],[9,0],[9,0],
+[0,6],[0,8],[0,7],[19,0],[15,0],[9,0],[15,0],[10,0],[11,0],[9,0],
+[0,6],[0,8],[0,7],[19,0],[15,0],[13,0],[9,0],[10,0],[10,0],[11,0]
+];
+//道具名稱
+var item_name=['曙光之翼','破曉之芒'];
+//每套部件數量
+var setCnt=[14,13,10,10];
+//==========參數設置完畢==========//
+
+var own=[];
+
+window.onload = function(){
+	init();
+};
+
+function init(){
+    var sum = 0;
+    for (var i = 0; i < item_name.length; i++){
+        sum += need[0][i];
+    }
+	if(sum==0) document.getElementById("notice").innerHTML = '<br>尚未更新，請勿使用！';
+	var table='<table border="1">';
+	table+=tr(td('套裝')+td('部位')+td('名稱')+td('', "id=need_name"));
+	table+=tr(td(remark('*勾選代表已有/不需要部件'),'colspan="4"'));
+	var pos=0;
+	for (var s in set){
+		var line=td('<label><input type="checkbox" id="all'+s+'" onclick=checkall('+s+') >'+set[s]+'</label>');
+		var cell1=''; var cell2=''; var cell3='';
+		for (var i=pos;i<pos+setCnt[s];i++){
+			cell2+='<label><input type="checkbox" id="own'+i+'" onclick=calc() >'+cname[i]+'</label><br>';
+			cell1+=type[i]+'<br>';
+            cell3+='&emsp;'+concat(need[i])+'<br>';
+		}
+		pos+=setCnt[s];
+        line+=td(cell1,'style="border-right-width:0"')+td(cell2,'style="border-left-width:0;border-right-width:0"')+td(cell3,'style="border-left-width:0"');
+		table+=tr(line);
+	}
+	table+='</table>';
+	document.getElementById("table").innerHTML = table;
+    document.getElementById("need_name").innerHTML = concat(item_name);
+	
+	var input='<table border="0">'+tr(td(''),'style="display:none"');
+    for (var i = 0; i < item_name.length; i++) {
+        input+=tr(td('當前'+item_name[i]+'：')+td(inputBox('current'+i,'calc()')));
+    }
+	input+='</table>';
+	input+='<hr>';
+	document.getElementById("input").innerHTML = input;
+    for (var i = 0; i < item_name.length; i++) {
+        setVal('current'+i, 0);
+    }
+	setInterval(settime, 1000);
+	calc();
+}
+function concat(arr){
+    var ret = '';
+    for (var i = 0; i < arr.length; i++){
+        ret += arr[i] + (i < arr.length - 1 ? '/' : '');
+    }
+    return ret;
+}
+function checkall(n){
+	var pos=0;
+	for (var i=0;i<n;i++){
+		pos+=setCnt[i];
+	}
+	if (document.getElementById('all'+n).checked){
+		for (var i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=true;
+		}
+	}else{
+		for (var i=pos;i<pos+setCnt[n];i++){
+			document.getElementById('own'+i).checked=false;
+		}
+	};
+	calc();
+}
+function calc(){
+	for (var i=0;i<need.length;i++){
+		if (document.getElementById('own'+i).checked){
+            own[i]=1;
+        }
+		else{
+            own[i]=0;
+        }
+	}
+	
+	var aim = [];
+    var rem = [];
+    var current = [];
+    for (var j = 0; j < item_name.length; j++){
+        aim[j] = 0;
+        rem[j] = 0;
+        current[j] = Math.max(0,getVal('current'+j));
+        for(var i = 0; i < need.length; i++){
+            aim[j] += need[i][j]*(1-own[i]);
+        }
+        rem[j] = aim[j] - current[j];
+    }
+	
+	var calcres='<table>'+tr(td('計算結果：'));
+    for (var i = 0; i < item_name.length; i++){
+        calcres+=tr(td('共需'+aim[i]+'個'+item_name[i]+'，還差'+rem[i]+'個'));
+    }
+	calcres+='</table>';
+	document.getElementById("calcres").innerHTML = calcres;
+}
+function loadSettings(){
+	if (typeof(Storage) !== "undefined" && localStorage.getItem("nikki_rev_star1806")) {
+		var loadString=localStorage.getItem("nikki_rev_star1806");
+		
+		var own_str=getStoredStr(loadString, 'own').split(',');
+		for (var i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
+		
+		calc();
+	}
+}
+function getStoredStr(string, id){
+	var start=string.indexOf(id+':[')+(id+':[').length;
+	return string.substr(start,string.substr(start).indexOf('];'));
+}
+function saveSettings(){
+	var saveString='own:['+own.join(',')+'];';
+	//own:[1,1,0,0,0];
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("nikki_rev_star1806", saveString);
+	}
+	document.getElementById('storage').innerHTML=saveString;
+}
+function settime(){
+	var time_now=new Date().getTime();
+	var time_d = Math.max(0,Math.floor((time_end-time_now)/1000/60/60/24));
+	var time_h = Math.max(0,Math.floor((time_end-time_now)/1000/60/60)%24);
+	var time_m = Math.max(0,Math.floor((time_end-time_now)/1000/60)%60);
+	var time_s = Math.max(0,Math.floor((time_end-time_now)/1000)%60);
+	document.getElementById("showTime").innerHTML = time_d + "天" + time_h + "時" + time_m + "分" + time_s + "秒";
+};
+function getVal(id){
+	return noNaN(parseInt(document.getElementById(id).value));
+}
+function setVal(id,val){
+	document.getElementById(id).value=val;
+}
+function noNaN( n ) {
+	return isNaN( n ) ? 0 : n;
+}
+function td(text,attr){
+	return '<td'+(attr?' '+attr:'')+'>'+text+'</td>';
+}
+function tr(text,attr){
+	return '<tr'+(attr?' '+attr:'')+'>'+text+'</tr>';
+}
+function remark(text){
+	return '<span class="remark">'+text+'</span>';
+}
+function inputBox(id,onchange,size){
+	return '<input type="text" id="'+id+'" onkeyup='+onchange+(size?' size="'+size+'"':'')+'>';
+}
+function selectBox(id,onchange,valArr,textArr){
+	var ret='<select id="'+id+'" onchange='+onchange+'>';
+	if(!textArr){
+        textArr=valArr;
+    }
+	for (var i in valArr){
+		ret+='<option value="'+valArr[i]+'">'+textArr[i]+'</option>';
+	}
+	ret+='</select>';;
+	return ret;
+}
+</script>
+
+</head>
+
+<body>
+<div class="sixteen columns">
+  <div class="h-border">
+    <div class="heading">
+      <h1>旋階之庭計算器</h1>
+    </div>
+  </div>
+</div>
+<p><strong>更新時間：</strong>2020.04.24<br/><strong>作者：</strong>Rean翎<br/>
+<strong>繁體化：</strong>莫默墨陌<br/>
+<strong>使用說明：</strong>詳細請參考<a href="https://bit.ly/2Kw7B7m" target="framemain">活動說明</a><br/></p>
+<hr/>
+<p align="center">距離活動結束還有　<span id="showTime"></span><br>
+<button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
+</p>
+<p id="table" align="center">
+<span id="radio"></span></p>
+<p id="input" align="center"></p>
+<p id="calcres" align="center"></p>
+<p id="storage" style="display:none"></p>
+</body>
+</html>
