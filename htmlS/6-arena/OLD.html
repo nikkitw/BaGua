@@ -13,7 +13,7 @@ td {text-align:left;}
 <script type="text/javascript" charset="UTF-8">
 //結束時間
 var timeEnd = new Date("12/27/2020 5:00:00 GMT+0800").getTime();
-var ymd = '200419';
+var ymd = '200823';
 //部件類別
 var ctype = [
 '特殊·背飾','手持物','妝容·瞳孔','手套','設計師之影','真我復甦','影之召喚','連身裙','妝容·唇色','鞋子','特殊·頸飾','妝容·底妝','頭髮','襪子','妝容·眉毛','耳飾',
@@ -342,15 +342,12 @@ function loadSettings(){
 		var loadString = localStorage.getItem("shineJJC_"+ymd);
 		
 		var own_str = getStoredStr(loadString, 'own').split(',');
-		for (var i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
+		for (i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
 		
 		var packNum_str = getStoredStr(loadString, 'packNum').split(',');
-		for (var i=0;i<pack.length;i++) {setVal("pack"+i, packNum_str[i]);}
-        
-		var multiCustInput_str = getStoredStr(loadString, 'multiCustInput_str').split(',');
-		for (var i=0;i<setCnt.length;i++) {setVal("multiCustInput"+i, multiCustInput_str[i]);}
+		for (i=0;i<pack.length;i++) {setVal("pack"+i, packNum_str[i]);}
 		
-		setPlainTextStoredStr(loadString, 'skillLv');
+		//setPlainTextStoredStr(loadString, 'skillLv');
 		setPlainTextStoredStr(loadString, 'current');
 		setPlainTextStoredStr(loadString, 'weekly');
 		setPlainTextStoredStr(loadString, 'remain_today');
@@ -358,7 +355,7 @@ function loadSettings(){
 		setPlainTextStoredStr(loadString, 'pct_exp');
 		setPlainTextStoredStr(loadString, 'topupPlan');
 		setPlainTextStoredStr(loadString, 'topupAlready');
-		
+
 		calc();
 	}
 }
@@ -373,11 +370,7 @@ function setPlainTextStoredStr(string, id){
 	setVal(id, tmp);
 }
 function saveSettings(){
-    var multiCustInput = [];
-    for (var s in setCnt){
-        multiCustInput.push(getVal('multiCustInput'+s));
-    }
-	var saveString = 'own:['+own.join(',')+'];skillLv:['+getVal('skillLv')+'];multiCustInput:['+multiCustInput.join(',')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
+	var saveString = 'own:['+own.join(',')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
 	//own:[1,1,0,0,0];
 	if (typeof(Storage) !== "undefined") {
 		localStorage.setItem("shineJJC_"+ymd, saveString);

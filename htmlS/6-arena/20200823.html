@@ -320,15 +320,13 @@ function loadSettings(){
 		var loadString = localStorage.getItem("shineJJC_"+ymd);
 		
 		var own_str = getStoredStr(loadString, 'own').split(',');
-		for (var i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
+		for (i=0;i<need.length;i++) {if(own_str[i]>0) {document.getElementById("own"+i).checked=true;}}
 		
 		var packNum_str = getStoredStr(loadString, 'packNum').split(',');
-		for (var i=0;i<pack.length;i++) {setVal("pack"+i, packNum_str[i]);}
-        
-		var multiCustInput_str = getStoredStr(loadString, 'multiCustInput_str').split(',');
-		for (var i=0;i<setCnt.length;i++) {setVal("multiCustInput"+i, multiCustInput_str[i]);}
+		for (i=0;i<pack.length;i++) {setVal("pack"+i, packNum_str[i]);}
 		
-		setPlainTextStoredStr(loadString, 'skillLv');
+		//setPlainTextStoredStr(loadString, 'skillLv');
+		//setPlainTextStoredStr(loadString, 'multiCustInput');
 		setPlainTextStoredStr(loadString, 'current');
 		setPlainTextStoredStr(loadString, 'weekly');
 		setPlainTextStoredStr(loadString, 'remain_today');
@@ -351,11 +349,7 @@ function setPlainTextStoredStr(string, id){
 	setVal(id, tmp);
 }
 function saveSettings(){
-    var multiCustInput = [];
-    for (var s in setCnt){
-        multiCustInput.push(getVal('multiCustInput'+s));
-    }
-	var saveString = 'own:['+own.join(',')+'];skillLv:['+getVal('skillLv')+'];multiCustInput:['+multiCustInput.join(',')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
+	var saveString = 'own:['+own.join(',')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
 	//own:[1,1,0,0,0];
 	if (typeof(Storage) !== "undefined") {
 		localStorage.setItem("shineJJC_"+ymd, saveString);
