@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>競技場往期+本期計算器</title>
+<title>競技場第五期計算器</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <link rel="stylesheet" type="text/css" href="../../css/style3.css" />
 <style>
@@ -13,45 +13,23 @@ td {text-align:left;}
 <script type="text/javascript" charset="UTF-8">
 //結束時間
 var timeEnd = new Date("5/2/2021 5:00:00 GMT+0800").getTime();
-var ymd = '200823';
+var ymd = '200419';
 //部件類別
 var ctype = [
-'特殊·背飾','手持物','妝容·瞳孔','手套','設計師之影','真我復甦','影之召喚','連身裙','妝容·唇色','鞋子','特殊·頸飾','妝容·底妝','頭髮','襪子','妝容·眉毛','耳飾',
-'特殊·背飾','手持物','特殊·面飾','設計師之影','真我復甦','影之召喚','連身裙','妝容·瞳孔','鞋子','特殊·腿飾','妝容·底妝','頭髮','襪子','妝容·唇色','手套',
-'外套','手飾','下裝','妝容·瞳孔','設計師之影','真我復甦','影之召喚','上衣','妝容·底妝','鞋子','耳飾','妝容·眉毛','頭髮','襪子','妝容·唇色','特殊·腿飾',
-'帽子','手套','妝容·瞳孔','設計師之影','真我復甦','影之召喚','連身裙','妝容·底妝','鞋子','頸鍊','妝容·眉毛','頭髮','襪子','妝容·唇色','耳飾',
-'髮飾','手持物','妝容·瞳孔','手套','設計師之影','真我復甦','影之召喚','連身裙','妝容·底妝','鞋子','耳飾','妝容·眉毛','髮型','手飾','妝容·唇色','項鍊',
 '帽子','手飾','妝容·瞳孔','特殊·手部','設計師之影','真我復甦','影之召喚','連身裙','妝容·底妝','鞋子','妝容·睫毛','妝容·眉毛','髮型','妝容·唇色','襪子','耳飾',
 
 ];
 //部件名稱
 var cname = [
-'記憶殘翼','溫柔禱歌','蝴蝶之夢','纏繞愛恨','精靈哀歌','精靈哀歌','精靈哀歌','夢與蝶之吻','輕吟悲歌','精靈枷鎖','月光束縛','殘翼','沉默的記憶','歲月糾纏','清淺傷痕','精靈之泪',
-'氣氣瓶瓶','動感波浪','隱形守護','蒸氣幻想','蒸氣幻想','蒸氣幻想','液態重組','紫帶珊瑚','深海潛游','區域封鎖','深潛幻影','流動韻律','浮光泡沫','淺海夕照','黃色預警',
-'玄朱流金','赤霞金光','風舞羅裳','星辰垂影','錦衣行歌','錦衣行歌','錦衣行歌','浴火之歌','月印朱顏','風躍火舞','火漆之印','新月彎刀','激流銀輝','層林夜奔','點絳明珠','赤紅印記',
-'深淵薄霧','暗羽吟唱','寒星','羽落星淵','羽落星淵','羽落星淵','羽落星淵','暗夜重生','輕羽夜歌','夜羽漣漪','墜落之羽','午夜變奏','案星十字','熾烈暮色','天鵝夢影',
-'羽紗蝶影','月夜初綻','沁野','朝霧蘭庭','憶之眷旅','憶之眷旅','憶之眷旅','憶之眷旅','逝水年華','青蔥旅途','初蕊','風葉','交織心意','時光注記','歲月詩語','尋覓之扉',
 '榮光之冕','光之痕','純澈','紅寶石聖戒','眷光之頌','眷光之頌','眷光之頌','眷光之頌','神愛世人','天穹回聲','無訴','不移信念','璨光初臨','虔敬心','無暇信仰','星月相輝',
 
 ];
 //套裝名稱
-var set = [
-'精靈哀歌',
-'蒸氣幻想',
-'錦衣行歌',
-'羽落星淵',
-'憶之眷旅',
-'眷光之頌',
-];
+var set = ['眷光之頌'];
 //每套部件數量
-var setCnt = [16,15,16,15,16,16,];
+var setCnt = [16];
 //需要段位
 var creq = [
-'顛覆未來之王2星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師2星','靈感重構大師2星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星','自由搭配師1星','自由搭配師1星',
-'顛覆未來之王2星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師2星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星','自由搭配師1星','自由搭配師1星',
-'顛覆未來之王2星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師2星','靈感重構大師2星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星','自由搭配師1星','自由搭配師1星',
-'第5001-10000名','顛覆未來之王3星','顛覆未來之王2星','顛覆未來之王1星','顛覆未來之王1星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星',
-'第5001-10000名','顛覆未來之王3星','顛覆未來之王2星','顛覆未來之王1星','顛覆未來之王1星','顛覆未來之王1星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星',
 '第5001-10000名','顛覆未來之王3星','顛覆未來之王2星','顛覆未來之王1星','顛覆未來之王1星','顛覆未來之王1星','顛覆未來之王1星','靈感重構大師3星','靈感重構大師2星','靈感重構大師1星','記憶創造者3星','記憶創造者2星','記憶創造者1星','自由搭配師3星','自由搭配師2星','自由搭配師1星',
 
 ];
@@ -59,11 +37,6 @@ var creq = [
 var multStr = '影之召喚';
 //單價
 var need = [
-1188,792,528,528,1500,750,750,990,264,528,330,198,528,264,165,198,
-1188,1188,660,1500,750,750,990,264,528,330,198,528,264,165,198,
-1188,792,726,528,1500,750,750,792,246,528,330,198,528,264,165,198,
-1188,1188,660,1500,750,750,990,264,528,330,198,528,264,165,198,
-1188,792,528,528,1500,750,750,990,264,528,330,198,528,264,165,198,
 1188,792,528,528,1500,750,750,990,264,528,330,198,528,264,165,198,
 
 ];
@@ -313,23 +286,6 @@ function calc(){
 	}
 }
 
-function checkall(n){
-	var pos=0;
-	for (var i=0;i<n;i++){
-		pos+=setCnt[i];
-	}
-	if (document.getElementById('all'+n).checked){
-		for (var i=pos;i<pos+setCnt[n];i++){
-			document.getElementById('own'+i).checked=true;
-		}
-	}else{
-		for (var i=pos;i<pos+setCnt[n];i++){
-			document.getElementById('own'+i).checked=false;
-		}
-	};
-	calc();
-}
-
 function checkMax(boxName, maxVal){
 	var val = getVal(boxName);
 	if (val>maxVal){
@@ -352,7 +308,6 @@ function loadSettings(){
 		var packNum_str = getStoredStr(loadString, 'packNum').split(',');
 		for (i=0;i<pack.length;i++) {setVal("pack"+i, packNum_str[i]);}
 		
-		//setPlainTextStoredStr(loadString, 'skillLv');
 		setPlainTextStoredStr(loadString, 'current');
 		setPlainTextStoredStr(loadString, 'weekly');
 		setPlainTextStoredStr(loadString, 'remain_today');
@@ -360,7 +315,8 @@ function loadSettings(){
 		setPlainTextStoredStr(loadString, 'pct_exp');
 		setPlainTextStoredStr(loadString, 'topupPlan');
 		setPlainTextStoredStr(loadString, 'topupAlready');
-
+		setPlainTextStoredStr(loadString, 'skillLv');
+		setPlainTextStoredStr(loadString, 'multiCustInput');
 		calc();
 	}
 }
@@ -375,7 +331,7 @@ function setPlainTextStoredStr(string, id){
 	setVal(id, tmp);
 }
 function saveSettings(){
-	var saveString = 'own:['+own.join(',')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
+	var saveString = 'own:['+own.join(',')+'];skillLv:['+getVal('skillLv')+'];multiCustInput:['+getVal('multiCustInput')+'];packNum:['+packNum.join(',')+'];current:['+getVal('current')+'];weekly:['+getVal('weekly')+'];remain_today:['+getVal('remain_today')+'];remain_buy_today:['+getVal('remain_buy_today')+'];pct_exp:['+getVal('pct_exp')+'];topupPlan:['+getVal('topupPlan')+'];topupAlready:['+getVal('topupAlready')+'];';
 	//own:[1,1,0,0,0];
 	if (typeof(Storage) !== "undefined") {
 		localStorage.setItem("shineJJC_"+ymd, saveString);
@@ -419,7 +375,7 @@ function selectBox(id,onchange,valArr,textArr){
 <div class="sixteen columns">
 <div class="h-border">
 <div class="heading">
-<h1>競技場往期+本期計算器</h1>
+<h1>競技場第五期計算器</h1>
 </div>
 </div>
 </div>
