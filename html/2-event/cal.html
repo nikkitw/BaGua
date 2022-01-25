@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>活動計算器</title>
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+<style>
+.remark{font-size:80%;}
+td {text-align:left;}
+</style>
+<script type="text/javascript" charset="UTF-8">
+var item_name = '道具';
+
+window.onload = function(){
+	init();
+    calc();
+};
+
+function init(){
+	var input='<table border="0">'+tr(td('參數設置','colspan="2"'));
+	input+=tr(td('目標'+item_name+'數：')+td(inputBox('aim','calc()')));
+	input+=tr(td('當前'+item_name+'數：')+td(inputBox('current','calc()')));
+	input+=tr(td('剩餘天數：')+td(inputBox('remain_days','calc()')));
+	input+=tr(td('關卡數量：')+td(inputBox('level_cnt','calc()')));
+	input+=tr(td('每關每次獲得道具：')+td(inputBox('gain_each','calc()')));
+	input+=tr(td('每天每關免費次數：')+td(inputBox('free_1day','calc()')));
+	input+=tr(td('今天剩餘次數：')+td(inputBox('remain_today','calc()')));
+	input+=tr(td('未領取免費'+item_name+'數：')+td(inputBox('extra','calc()')));
+	input+=tr(td('買一次花費鑽石：')+td(inputBox('price','calc()')));
+	input+=tr(td('買一次獲得次數：')+td(inputBox('once','calc()')));
+	input+=tr(td('每關體力：')+td(inputBox('perstamina','calc()')));
+    input+='</table>';
+	input+='<hr>';
+	document.getElementById("input").innerHTML = input;
+	
+	setVal("aim", 2000);
+	setVal("current", 0);
+	setVal("remain_days", 7);
+	setVal("level_cnt", 1);
+	setVal("free_1day", 10);
+	setVal("remain_today", 0);
+	setVal('extra', 0);
+	setVal('price', 6);
+	setVal('once', 1);
+	setVal('gain_each', 5);
+	setVal('perstamina', 0);
+}
+function calc(){
+	aim = Math.max(0,getVal('aim'));
+	current = Math.max(0,getVal('current'));
+	remain_days = Math.max(0,getVal('remain_days'));
+	level_cnt = Math.max(0,getVal('level_cnt'));
+	free_1day = Math.max(0,getVal('free_1day'));
+	remain_today = Math.max(0,getVal('remain_today'));
+	extra = Math.max(0,getVal('extra'));
+	price = Math.max(0,getVal('price'));
+	once = Math.max(0,getVal('once'));
+	gain_each = Math.max(0,getVal('gain_each'));
+	perstamina = Math.max(0,getVal('perstamina'));
+    
+	var rem = aim - current + extra;
+	var to_get_times = remain_days * free_1day * level_cnt + remain_today;
+	var times = Math.ceil(rem / gain_each);
+	var diff_times = Math.max(0, times - to_get_times);
+	var to_buy = Math.max(0, Math.ceil(diff_times / once));
+	var to_pay = to_buy * price;
+	var stamina = times * perstamina;
+	
+	var calcres='<table>'+tr(td('計算結果'));
+	calcres+=tr(td('共需'+aim+'個'+item_name+'，扣除已有還需刷'+rem+'個'));
+	calcres+=tr(td('還需'+times+'次（其中免費'+to_get_times+'次）'));
+	calcres+=tr(td('需購買'+to_buy+'次，花鑽'+to_pay+'個'));
+	if(stamina > 0)
+        calcres+=tr(td('需消耗'+stamina+'體力'));
+	calcres+='</table>';
+	document.getElementById("calcres").innerHTML = calcres;
+}
+function loadSettings(){
+	if (typeof(Storage) !== "undefined" && localStorage.getItem("nikki_custom")) {
+		var loadString = localStorage.getItem("nikki_custom");
+		var _aim = getStoredStr(loadString, 'aim');
+		var _current = getStoredStr(loadString, 'current');
+		var _level_cnt = getStoredStr(loadString, 'level_cnt');
+		var _remain_days = getStoredStr(loadString, 'remain_days');
+		var _free_1day = getStoredStr(loadString, 'free_1day');
+		var _remain_today = getStoredStr(loadString, 'remain_today');
+		var _extra = getStoredStr(loadString, 'extra');
+		var _price = getStoredStr(loadString, 'price');
+		var _once = getStoredStr(loadString, 'once');
+		var _gain_each = getStoredStr(loadString, 'gain_each');
+		var _perstamina = getStoredStr(loadString, 'perstamina');
+        setVal("aim", _aim);
+        setVal("current", _current);
+        setVal("remain_days", _remain_days);
+        setVal("level_cnt", _level_cnt);
+        setVal("free_1day", _free_1day);
+        setVal("remain_today", _remain_today);
+        setVal("extra", _extra);
+        setVal("price", _price);
+        setVal("once", _once);
+        setVal("gain_each", _gain_each);
+        setVal("perstamina", _perstamina);
+		calc();
+	}
+}
+function getStoredStr(string, id){
+	var start = string.indexOf(id+':[')+(id+':[').length;
+	return string.substr(start,string.substr(start).indexOf('];'));
+}
+function saveSettings(){
+	var saveString = 'aim:['+aim+'];current:['+current+'];remain_days:['+remain_days+'];level_cnt:['+level_cnt+'];free_1day:['+free_1day+'];remain_today:['+remain_today+'];extra:['+extra+'];price:['+price+'];once:['+once+'];gain_each:['+gain_each+'];perstamina:['+perstamina+'];';
+	if (typeof(Storage) !== "undefined") {
+		localStorage.setItem("nikki_custom", saveString);
+	}
+	document.getElementById('storage').innerHTML=saveString;
+}
+function getVal(id){
+	return noNaN(parseInt(document.getElementById(id).value));
+}
+function setVal(id,val){
+	document.getElementById(id).value=val;
+}
+function noNaN( n ) {
+	return isNaN( n ) ? 0 : n;
+}
+function td(text,attr){
+	return '<td'+(attr?' '+attr:'')+'>'+text+'</td>';
+}
+function tr(text,attr){
+	return '<tr'+(attr?' '+attr:'')+'>'+text+'</tr>';
+}
+function remark(text){
+	return '<span class="remark">'+text+'</span>';
+}
+function inputBox(id,onchange,size){
+	return '<input type="text" id="'+id+'" onkeyup='+onchange+(size?' size="'+size+'"':'')+'>';
+}
+function selectBox(id,onchange,valArr,textArr){
+	var ret = '<select id="'+id+'" onchange='+onchange+'>';
+	if(!textArr) textArr=valArr;
+	for (var i in valArr){
+		ret += '<option value="'+valArr[i]+'">'+textArr[i]+'</option>';
+	}
+	ret += '</select>';;
+	return ret;
+}
+</script>
+
+
+</head>
+
+<body>
+<div class="sixteen columns">
+  <div class="h-border">
+    <div class="heading">
+      <h1>活動計算器</h1>
+    </div>
+  </div>
+</div>
+<p><strong>更新時間：</strong>2022.1.25<br/><strong>作者：</strong>Rean翎<br/>
+<strong>繁體化：</strong>莫默墨陌<br/>
+<strong>使用說明：</strong>通用版的活動計算器。<br/></p>
+<hr/>
+<p align="center">
+<button onclick="saveSettings()">保存設置</button><button onclick="loadSettings()">讀取設置</button>
+</p>
+<p id="table" align="center">
+<span id="radio"></span></p>
+<p id="input" align="center"></p>
+<p id="calcres" align="center"></p>
+<p id="storage" style="display:none"></p>
+</body>
+</html>
